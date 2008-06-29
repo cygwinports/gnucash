@@ -1,0 +1,387 @@
+diff -urN -x CYGWIN-PATCHES -x 'aclocal.m4~' -x aclocal.m4t -x autom4te.cache -x config.cache -x config.log -x config.status -x config.h -x '*config.h.in' -x ABOUT-NLS -x Makefile.in.in -x Makevars.template -x '*SlackBuild*' -x '*.egg-info' -x '*.class' -x '*.pyc' -x '*.mo' -x '*.gmo' -x '*.orig' -x '*.rej' -x '*.spec' -x '*.temp' -x '*~' -x '*.stackdump' -x COPYING -x INSTALL -x compile -x config-ml.in -x config.guess -x config.sub -x depcomp -x elisp-comp -x install-sh -x libtool.m4 -x ltoptions.m4 -x ltsugar.m4 -x ltversion.m4 -x 'lt~obsolete.m4' -x ltmain.sh -x mdate-sh -x missing -x mkinstalldirs -x py-compile -x symlink-tree -x texinfo.tex -x ylwrap -x config.rpath -x aclocal.m4 -x Makefile.in -x makefile.in -x configure -x omf.make -x xmldocs.make -x gnome-doc-utils.make -x gnome-doc-utils.m4 -x intltool.m4 -x intltool-extract -x intltool-extract.in -x intltool-merge -x intltool-merge.in -x intltool-update -x intltool-update.in -x '*.info' -x stamp-vti -x version.texi origsrc/gnucash-2.2.5/Makefile.am src/gnucash-2.2.5/Makefile.am
+--- origsrc/gnucash-2.2.5/Makefile.am	2008-03-02 07:25:28.000000000 -0600
++++ src/gnucash-2.2.5/Makefile.am	2008-06-29 14:04:20.156250000 -0500
+@@ -132,7 +132,7 @@
+ 
+ .PHONY: etags ctags
+ 
+-ACLOCAL_AMFLAGS = -I macros -I m4
++ACLOCAL_AMFLAGS = -I macros
+ 
+ .PHONY: doc
+ doc:
+diff -urN -x CYGWIN-PATCHES -x 'aclocal.m4~' -x aclocal.m4t -x autom4te.cache -x config.cache -x config.log -x config.status -x config.h -x '*config.h.in' -x ABOUT-NLS -x Makefile.in.in -x Makevars.template -x '*SlackBuild*' -x '*.egg-info' -x '*.class' -x '*.pyc' -x '*.mo' -x '*.gmo' -x '*.orig' -x '*.rej' -x '*.spec' -x '*.temp' -x '*~' -x '*.stackdump' -x COPYING -x INSTALL -x compile -x config-ml.in -x config.guess -x config.sub -x depcomp -x elisp-comp -x install-sh -x libtool.m4 -x ltoptions.m4 -x ltsugar.m4 -x ltversion.m4 -x 'lt~obsolete.m4' -x ltmain.sh -x mdate-sh -x missing -x mkinstalldirs -x py-compile -x symlink-tree -x texinfo.tex -x ylwrap -x config.rpath -x aclocal.m4 -x Makefile.in -x makefile.in -x configure -x omf.make -x xmldocs.make -x gnome-doc-utils.make -x gnome-doc-utils.m4 -x intltool.m4 -x intltool-extract -x intltool-extract.in -x intltool-merge -x intltool-merge.in -x intltool-update -x intltool-update.in -x '*.info' -x stamp-vti -x version.texi origsrc/gnucash-2.2.5/configure.in src/gnucash-2.2.5/configure.in
+--- origsrc/gnucash-2.2.5/configure.in	2008-04-27 05:17:16.000000000 -0500
++++ src/gnucash-2.2.5/configure.in	2008-06-29 14:04:20.203125000 -0500
+@@ -137,7 +137,7 @@
+ AC_MSG_RESULT($platform_win32)
+ AM_CONDITIONAL(PLATFORM_WIN32, test "x$platform_win32" = "xyes")
+ 
+-if test "$platform_win32" = yes; then
++if test "$native_win32" = yes; then
+   REGEX_LIBS="-lregex"
+ else
+   REGEX_LIBS=""
+@@ -1392,10 +1392,16 @@
+ AC_MSG_RESULT($warnFLAGS)
+ 
+ # Adjust CFLAGS and LDFLAGS on Windows
++
+ if test "x${platform_win32}" = "xyes"; then
++  module="-module"
++  LDFLAGS="${LDFLAGS} -no-undefined"
++fi
++if test "x${native_win32}" = "xyes"; then
+   CFLAGS="${CFLAGS} -mms-bitfields"
+-  LDFLAGS="${LDFLAGS} -no-undefined -mwindows"
++  LDFLAGS="${LDFLAGS} -mwindows"
+ fi
++AC_SUBST(module)
+ 
+ ### --------------------------------------------------------------------------
+ ### Adjustments -- especially executables that aren't generated via
+diff -urN -x CYGWIN-PATCHES -x 'aclocal.m4~' -x aclocal.m4t -x autom4te.cache -x config.cache -x config.log -x config.status -x config.h -x '*config.h.in' -x ABOUT-NLS -x Makefile.in.in -x Makevars.template -x '*SlackBuild*' -x '*.egg-info' -x '*.class' -x '*.pyc' -x '*.mo' -x '*.gmo' -x '*.orig' -x '*.rej' -x '*.spec' -x '*.temp' -x '*~' -x '*.stackdump' -x COPYING -x INSTALL -x compile -x config-ml.in -x config.guess -x config.sub -x depcomp -x elisp-comp -x install-sh -x libtool.m4 -x ltoptions.m4 -x ltsugar.m4 -x ltversion.m4 -x 'lt~obsolete.m4' -x ltmain.sh -x mdate-sh -x missing -x mkinstalldirs -x py-compile -x symlink-tree -x texinfo.tex -x ylwrap -x config.rpath -x aclocal.m4 -x Makefile.in -x makefile.in -x configure -x omf.make -x xmldocs.make -x gnome-doc-utils.make -x gnome-doc-utils.m4 -x intltool.m4 -x intltool-extract -x intltool-extract.in -x intltool-merge -x intltool-merge.in -x intltool-update -x intltool-update.in -x '*.info' -x stamp-vti -x version.texi origsrc/gnucash-2.2.5/src/app-utils/Makefile.am src/gnucash-2.2.5/src/app-utils/Makefile.am
+--- origsrc/gnucash-2.2.5/src/app-utils/Makefile.am	2008-01-07 19:06:47.000000000 -0600
++++ src/gnucash-2.2.5/src/app-utils/Makefile.am	2008-06-29 14:04:20.203125000 -0500
+@@ -68,7 +68,7 @@
+   guile-util.h \
+   option-util.h
+ 
+-libgncmod_app_utils_la_LDFLAGS = -avoid-version
++libgncmod_app_utils_la_LDFLAGS = $(module) -avoid-version
+ 
+ libgncmod_app_utils_la_LIBADD = \
+   ${top_builddir}/src/gnc-module/libgnc-module.la \
+diff -urN -x CYGWIN-PATCHES -x 'aclocal.m4~' -x aclocal.m4t -x autom4te.cache -x config.cache -x config.log -x config.status -x config.h -x '*config.h.in' -x ABOUT-NLS -x Makefile.in.in -x Makevars.template -x '*SlackBuild*' -x '*.egg-info' -x '*.class' -x '*.pyc' -x '*.mo' -x '*.gmo' -x '*.orig' -x '*.rej' -x '*.spec' -x '*.temp' -x '*~' -x '*.stackdump' -x COPYING -x INSTALL -x compile -x config-ml.in -x config.guess -x config.sub -x depcomp -x elisp-comp -x install-sh -x libtool.m4 -x ltoptions.m4 -x ltsugar.m4 -x ltversion.m4 -x 'lt~obsolete.m4' -x ltmain.sh -x mdate-sh -x missing -x mkinstalldirs -x py-compile -x symlink-tree -x texinfo.tex -x ylwrap -x config.rpath -x aclocal.m4 -x Makefile.in -x makefile.in -x configure -x omf.make -x xmldocs.make -x gnome-doc-utils.make -x gnome-doc-utils.m4 -x intltool.m4 -x intltool-extract -x intltool-extract.in -x intltool-merge -x intltool-merge.in -x intltool-update -x intltool-update.in -x '*.info' -x stamp-vti -x version.texi origsrc/gnucash-2.2.5/src/bin/gnucash.in src/gnucash-2.2.5/src/bin/gnucash.in
+--- origsrc/gnucash-2.2.5/src/bin/gnucash.in	2008-01-07 19:05:50.000000000 -0600
++++ src/gnucash-2.2.5/src/bin/gnucash.in	2008-06-29 14:04:20.218750000 -0500
+@@ -1,8 +1,5 @@
+ #!/bin/sh
+ 
+-PATH="@-BIN_DIR-@:${PATH}"
+-export PATH
+-
+ GUILE_WARN_DEPRECATED="no"
+ export GUILE_WARN_DEPRECATED
+ 
+@@ -16,9 +13,11 @@
+ EXTRA_LIBS="${EXTRA_LIBS}@-PATH_SEPARATOR-@@-GNC_LIB_INSTALLDIR-@"
+ EXTRA_LIBS="${EXTRA_LIBS}@-PATH_SEPARATOR-@@-GNC_PKGLIB_INSTALLDIR-@"
+ 
++PATH="${EXTRA_LIBS}@-PATH_SEPARATOR-@@-BIN_DIR-@@-PATH_SEPARATOR-@${PATH}"
+ LD_LIBRARY_PATH="${EXTRA_LIBS}@-PATH_SEPARATOR-@${LD_LIBRARY_PATH}"
+ DYLD_LIBRARY_PATH="${EXTRA_LIBS}@-PATH_SEPARATOR-@${DYLD_LIBRARY_PATH}"
+ 
++export PATH
+ export GNC_MODULE_PATH
+ export GUILE_LOAD_PATH
+ export LD_LIBRARY_PATH
+diff -urN -x CYGWIN-PATCHES -x 'aclocal.m4~' -x aclocal.m4t -x autom4te.cache -x config.cache -x config.log -x config.status -x config.h -x '*config.h.in' -x ABOUT-NLS -x Makefile.in.in -x Makevars.template -x '*SlackBuild*' -x '*.egg-info' -x '*.class' -x '*.pyc' -x '*.mo' -x '*.gmo' -x '*.orig' -x '*.rej' -x '*.spec' -x '*.temp' -x '*~' -x '*.stackdump' -x COPYING -x INSTALL -x compile -x config-ml.in -x config.guess -x config.sub -x depcomp -x elisp-comp -x install-sh -x libtool.m4 -x ltoptions.m4 -x ltsugar.m4 -x ltversion.m4 -x 'lt~obsolete.m4' -x ltmain.sh -x mdate-sh -x missing -x mkinstalldirs -x py-compile -x symlink-tree -x texinfo.tex -x ylwrap -x config.rpath -x aclocal.m4 -x Makefile.in -x makefile.in -x configure -x omf.make -x xmldocs.make -x gnome-doc-utils.make -x gnome-doc-utils.m4 -x intltool.m4 -x intltool-extract -x intltool-extract.in -x intltool-merge -x intltool-merge.in -x intltool-update -x intltool-update.in -x '*.info' -x stamp-vti -x version.texi origsrc/gnucash-2.2.5/src/business/business-core/Makefile.am src/gnucash-2.2.5/src/business/business-core/Makefile.am
+--- origsrc/gnucash-2.2.5/src/business/business-core/Makefile.am	2008-01-07 19:06:00.000000000 -0600
++++ src/gnucash-2.2.5/src/business/business-core/Makefile.am	2008-06-29 14:04:20.218750000 -0500
+@@ -55,7 +55,7 @@
+   gncVendor.h \
+   gncVendorP.h
+ 
+-libgncmod_business_core_la_LDFLAGS = -avoid-version
++libgncmod_business_core_la_LDFLAGS = $(module) -avoid-version
+ 
+ libgncmod_business_core_la_LIBADD = \
+   ${top_builddir}/src/gnc-module/libgnc-module.la \
+diff -urN -x CYGWIN-PATCHES -x 'aclocal.m4~' -x aclocal.m4t -x autom4te.cache -x config.cache -x config.log -x config.status -x config.h -x '*config.h.in' -x ABOUT-NLS -x Makefile.in.in -x Makevars.template -x '*SlackBuild*' -x '*.egg-info' -x '*.class' -x '*.pyc' -x '*.mo' -x '*.gmo' -x '*.orig' -x '*.rej' -x '*.spec' -x '*.temp' -x '*~' -x '*.stackdump' -x COPYING -x INSTALL -x compile -x config-ml.in -x config.guess -x config.sub -x depcomp -x elisp-comp -x install-sh -x libtool.m4 -x ltoptions.m4 -x ltsugar.m4 -x ltversion.m4 -x 'lt~obsolete.m4' -x ltmain.sh -x mdate-sh -x missing -x mkinstalldirs -x py-compile -x symlink-tree -x texinfo.tex -x ylwrap -x config.rpath -x aclocal.m4 -x Makefile.in -x makefile.in -x configure -x omf.make -x xmldocs.make -x gnome-doc-utils.make -x gnome-doc-utils.m4 -x intltool.m4 -x intltool-extract -x intltool-extract.in -x intltool-merge -x intltool-merge.in -x intltool-update -x intltool-update.in -x '*.info' -x stamp-vti -x version.texi origsrc/gnucash-2.2.5/src/business/business-gnome/Makefile.am src/gnucash-2.2.5/src/business/business-gnome/Makefile.am
+--- origsrc/gnucash-2.2.5/src/business/business-gnome/Makefile.am	2008-01-07 19:06:06.000000000 -0600
++++ src/gnucash-2.2.5/src/business/business-gnome/Makefile.am	2008-06-29 14:04:20.234375000 -0500
+@@ -64,7 +64,7 @@
+   gnc-plugin-page-invoice.h \
+   search-owner.h
+ 
+-libgncmod_business_gnome_la_LDFLAGS = -avoid-version
++libgncmod_business_gnome_la_LDFLAGS = $(module) -avoid-version
+ 
+ libgncmod_business_gnome_la_LIBADD = \
+   ${top_builddir}/src/business/business-core/libgncmod-business-core.la \
+diff -urN -x CYGWIN-PATCHES -x 'aclocal.m4~' -x aclocal.m4t -x autom4te.cache -x config.cache -x config.log -x config.status -x config.h -x '*config.h.in' -x ABOUT-NLS -x Makefile.in.in -x Makevars.template -x '*SlackBuild*' -x '*.egg-info' -x '*.class' -x '*.pyc' -x '*.mo' -x '*.gmo' -x '*.orig' -x '*.rej' -x '*.spec' -x '*.temp' -x '*~' -x '*.stackdump' -x COPYING -x INSTALL -x compile -x config-ml.in -x config.guess -x config.sub -x depcomp -x elisp-comp -x install-sh -x libtool.m4 -x ltoptions.m4 -x ltsugar.m4 -x ltversion.m4 -x 'lt~obsolete.m4' -x ltmain.sh -x mdate-sh -x missing -x mkinstalldirs -x py-compile -x symlink-tree -x texinfo.tex -x ylwrap -x config.rpath -x aclocal.m4 -x Makefile.in -x makefile.in -x configure -x omf.make -x xmldocs.make -x gnome-doc-utils.make -x gnome-doc-utils.m4 -x intltool.m4 -x intltool-extract -x intltool-extract.in -x intltool-merge -x intltool-merge.in -x intltool-update -x intltool-update.in -x '*.info' -x stamp-vti -x version.texi origsrc/gnucash-2.2.5/src/business/business-utils/Makefile.am src/gnucash-2.2.5/src/business/business-utils/Makefile.am
+--- origsrc/gnucash-2.2.5/src/business/business-utils/Makefile.am	2008-01-07 19:06:00.000000000 -0600
++++ src/gnucash-2.2.5/src/business/business-utils/Makefile.am	2008-06-29 14:04:20.593750000 -0500
+@@ -19,7 +19,7 @@
+ noinst_HEADERS = \
+   business-options.h
+ 
+-libgncmod_business_utils_la_LDFLAGS = -avoid-version
++libgncmod_business_utils_la_LDFLAGS = $(module) -avoid-version
+ 
+ libgncmod_business_utils_la_LIBADD = \
+   ${top_builddir}/src/gnc-module/libgnc-module.la \
+diff -urN -x CYGWIN-PATCHES -x 'aclocal.m4~' -x aclocal.m4t -x autom4te.cache -x config.cache -x config.log -x config.status -x config.h -x '*config.h.in' -x ABOUT-NLS -x Makefile.in.in -x Makevars.template -x '*SlackBuild*' -x '*.egg-info' -x '*.class' -x '*.pyc' -x '*.mo' -x '*.gmo' -x '*.orig' -x '*.rej' -x '*.spec' -x '*.temp' -x '*~' -x '*.stackdump' -x COPYING -x INSTALL -x compile -x config-ml.in -x config.guess -x config.sub -x depcomp -x elisp-comp -x install-sh -x libtool.m4 -x ltoptions.m4 -x ltsugar.m4 -x ltversion.m4 -x 'lt~obsolete.m4' -x ltmain.sh -x mdate-sh -x missing -x mkinstalldirs -x py-compile -x symlink-tree -x texinfo.tex -x ylwrap -x config.rpath -x aclocal.m4 -x Makefile.in -x makefile.in -x configure -x omf.make -x xmldocs.make -x gnome-doc-utils.make -x gnome-doc-utils.m4 -x intltool.m4 -x intltool-extract -x intltool-extract.in -x intltool-merge -x intltool-merge.in -x intltool-update -x intltool-update.in -x '*.info' -x stamp-vti -x version.texi origsrc/gnucash-2.2.5/src/business/dialog-tax-table/Makefile.am src/gnucash-2.2.5/src/business/dialog-tax-table/Makefile.am
+--- origsrc/gnucash-2.2.5/src/business/dialog-tax-table/Makefile.am	2008-01-07 19:06:06.000000000 -0600
++++ src/gnucash-2.2.5/src/business/dialog-tax-table/Makefile.am	2008-06-29 14:04:20.609375000 -0500
+@@ -24,7 +24,7 @@
+ noinst_HEADERS = \
+   dialog-tax-table.h
+ 
+-libgncmod_dialog_tax_table_la_LDFLAGS = -avoid-version
++libgncmod_dialog_tax_table_la_LDFLAGS = $(module) -avoid-version
+ 
+ libgncmod_dialog_tax_table_la_LIBADD = \
+   ${top_builddir}/src/business/business-core/libgncmod-business-core.la \
+diff -urN -x CYGWIN-PATCHES -x 'aclocal.m4~' -x aclocal.m4t -x autom4te.cache -x config.cache -x config.log -x config.status -x config.h -x '*config.h.in' -x ABOUT-NLS -x Makefile.in.in -x Makevars.template -x '*SlackBuild*' -x '*.egg-info' -x '*.class' -x '*.pyc' -x '*.mo' -x '*.gmo' -x '*.orig' -x '*.rej' -x '*.spec' -x '*.temp' -x '*~' -x '*.stackdump' -x COPYING -x INSTALL -x compile -x config-ml.in -x config.guess -x config.sub -x depcomp -x elisp-comp -x install-sh -x libtool.m4 -x ltoptions.m4 -x ltsugar.m4 -x ltversion.m4 -x 'lt~obsolete.m4' -x ltmain.sh -x mdate-sh -x missing -x mkinstalldirs -x py-compile -x symlink-tree -x texinfo.tex -x ylwrap -x config.rpath -x aclocal.m4 -x Makefile.in -x makefile.in -x configure -x omf.make -x xmldocs.make -x gnome-doc-utils.make -x gnome-doc-utils.m4 -x intltool.m4 -x intltool-extract -x intltool-extract.in -x intltool-merge -x intltool-merge.in -x intltool-update -x intltool-update.in -x '*.info' -x stamp-vti -x version.texi origsrc/gnucash-2.2.5/src/calculation/Makefile.am src/gnucash-2.2.5/src/calculation/Makefile.am
+--- origsrc/gnucash-2.2.5/src/calculation/Makefile.am	2008-01-07 19:06:10.000000000 -0600
++++ src/gnucash-2.2.5/src/calculation/Makefile.am	2008-06-29 14:04:20.609375000 -0500
+@@ -2,7 +2,7 @@
+ 
+ pkglib_LTLIBRARIES = libgncmod-calculation.la
+ 
+-libgncmod_calculation_la_LDFLAGS = -avoid-version
++libgncmod_calculation_la_LDFLAGS = $(module) -avoid-version
+ 
+ libgncmod_calculation_la_LIBADD = \
+   ${GLIB_LIBS} ${GUILE_LIBS} \
+diff -urN -x CYGWIN-PATCHES -x 'aclocal.m4~' -x aclocal.m4t -x autom4te.cache -x config.cache -x config.log -x config.status -x config.h -x '*config.h.in' -x ABOUT-NLS -x Makefile.in.in -x Makevars.template -x '*SlackBuild*' -x '*.egg-info' -x '*.class' -x '*.pyc' -x '*.mo' -x '*.gmo' -x '*.orig' -x '*.rej' -x '*.spec' -x '*.temp' -x '*~' -x '*.stackdump' -x COPYING -x INSTALL -x compile -x config-ml.in -x config.guess -x config.sub -x depcomp -x elisp-comp -x install-sh -x libtool.m4 -x ltoptions.m4 -x ltsugar.m4 -x ltversion.m4 -x 'lt~obsolete.m4' -x ltmain.sh -x mdate-sh -x missing -x mkinstalldirs -x py-compile -x symlink-tree -x texinfo.tex -x ylwrap -x config.rpath -x aclocal.m4 -x Makefile.in -x makefile.in -x configure -x omf.make -x xmldocs.make -x gnome-doc-utils.make -x gnome-doc-utils.m4 -x intltool.m4 -x intltool-extract -x intltool-extract.in -x intltool-merge -x intltool-merge.in -x intltool-update -x intltool-update.in -x '*.info' -x stamp-vti -x version.texi origsrc/gnucash-2.2.5/src/engine/Makefile.am src/gnucash-2.2.5/src/engine/Makefile.am
+--- origsrc/gnucash-2.2.5/src/engine/Makefile.am	2008-01-07 19:06:45.000000000 -0600
++++ src/gnucash-2.2.5/src/engine/Makefile.am	2008-06-29 14:04:20.625000000 -0500
+@@ -106,7 +106,7 @@
+ 
+ noinst_SCRIPTS = iso-currencies-to-c
+ 
+-libgncmod_engine_la_LDFLAGS = -avoid-version
++libgncmod_engine_la_LDFLAGS = $(module) -avoid-version
+ 
+ libgncmod_engine_la_LIBADD = \
+   ../gnc-module/libgnc-module.la \
+diff -urN -x CYGWIN-PATCHES -x 'aclocal.m4~' -x aclocal.m4t -x autom4te.cache -x config.cache -x config.log -x config.status -x config.h -x '*config.h.in' -x ABOUT-NLS -x Makefile.in.in -x Makevars.template -x '*SlackBuild*' -x '*.egg-info' -x '*.class' -x '*.pyc' -x '*.mo' -x '*.gmo' -x '*.orig' -x '*.rej' -x '*.spec' -x '*.temp' -x '*~' -x '*.stackdump' -x COPYING -x INSTALL -x compile -x config-ml.in -x config.guess -x config.sub -x depcomp -x elisp-comp -x install-sh -x libtool.m4 -x ltoptions.m4 -x ltsugar.m4 -x ltversion.m4 -x 'lt~obsolete.m4' -x ltmain.sh -x mdate-sh -x missing -x mkinstalldirs -x py-compile -x symlink-tree -x texinfo.tex -x ylwrap -x config.rpath -x aclocal.m4 -x Makefile.in -x makefile.in -x configure -x omf.make -x xmldocs.make -x gnome-doc-utils.make -x gnome-doc-utils.m4 -x intltool.m4 -x intltool-extract -x intltool-extract.in -x intltool-merge -x intltool-merge.in -x intltool-update -x intltool-update.in -x '*.info' -x stamp-vti -x version.texi origsrc/gnucash-2.2.5/src/engine/test-core/Makefile.am src/gnucash-2.2.5/src/engine/test-core/Makefile.am
+--- origsrc/gnucash-2.2.5/src/engine/test-core/Makefile.am	2008-01-07 19:06:40.000000000 -0600
++++ src/gnucash-2.2.5/src/engine/test-core/Makefile.am	2008-06-29 14:04:20.671875000 -0500
+@@ -7,7 +7,7 @@
+   ${QOF_LIBS}
+ 
+ libgncmod_test_engine_la_SOURCES = gncmod-test-engine.c test-engine-stuff.c
+-libgncmod_test_engine_la_LDFLAGS = -module
++libgncmod_test_engine_la_LDFLAGS = $(module) -avoid-version
+ libgncmod_test_engine_la_LIBADD = \
+   ${top_builddir}/src/gnc-module/libgnc-module.la \
+   ../libgncmod-engine.la \
+diff -urN -x CYGWIN-PATCHES -x 'aclocal.m4~' -x aclocal.m4t -x autom4te.cache -x config.cache -x config.log -x config.status -x config.h -x '*config.h.in' -x ABOUT-NLS -x Makefile.in.in -x Makevars.template -x '*SlackBuild*' -x '*.egg-info' -x '*.class' -x '*.pyc' -x '*.mo' -x '*.gmo' -x '*.orig' -x '*.rej' -x '*.spec' -x '*.temp' -x '*~' -x '*.stackdump' -x COPYING -x INSTALL -x compile -x config-ml.in -x config.guess -x config.sub -x depcomp -x elisp-comp -x install-sh -x libtool.m4 -x ltoptions.m4 -x ltsugar.m4 -x ltversion.m4 -x 'lt~obsolete.m4' -x ltmain.sh -x mdate-sh -x missing -x mkinstalldirs -x py-compile -x symlink-tree -x texinfo.tex -x ylwrap -x config.rpath -x aclocal.m4 -x Makefile.in -x makefile.in -x configure -x omf.make -x xmldocs.make -x gnome-doc-utils.make -x gnome-doc-utils.m4 -x intltool.m4 -x intltool-extract -x intltool-extract.in -x intltool-merge -x intltool-merge.in -x intltool-update -x intltool-update.in -x '*.info' -x stamp-vti -x version.texi origsrc/gnucash-2.2.5/src/gnc-module/test/misc-mods/Makefile.am src/gnucash-2.2.5/src/gnc-module/test/misc-mods/Makefile.am
+--- origsrc/gnucash-2.2.5/src/gnc-module/test/misc-mods/Makefile.am	2008-01-07 19:05:46.000000000 -0600
++++ src/gnucash-2.2.5/src/gnc-module/test/misc-mods/Makefile.am	2008-06-29 14:04:20.671875000 -0500
+@@ -15,7 +15,7 @@
+   $(GLIB_LIBS)
+ 
+ libincompatdep_la_SOURCES=incompatdep.c
+-libincompatdep_la_LDFLAGS=-module -rpath ${PWD}
++libincompatdep_la_LDFLAGS=-module -avoid-version -rpath ${PWD}
+ libincompatdep_la_LIBADD = \
+   ../../libgnc-module.la \
+   $(GLIB_LIBS)
+diff -urN -x CYGWIN-PATCHES -x 'aclocal.m4~' -x aclocal.m4t -x autom4te.cache -x config.cache -x config.log -x config.status -x config.h -x '*config.h.in' -x ABOUT-NLS -x Makefile.in.in -x Makevars.template -x '*SlackBuild*' -x '*.egg-info' -x '*.class' -x '*.pyc' -x '*.mo' -x '*.gmo' -x '*.orig' -x '*.rej' -x '*.spec' -x '*.temp' -x '*~' -x '*.stackdump' -x COPYING -x INSTALL -x compile -x config-ml.in -x config.guess -x config.sub -x depcomp -x elisp-comp -x install-sh -x libtool.m4 -x ltoptions.m4 -x ltsugar.m4 -x ltversion.m4 -x 'lt~obsolete.m4' -x ltmain.sh -x mdate-sh -x missing -x mkinstalldirs -x py-compile -x symlink-tree -x texinfo.tex -x ylwrap -x config.rpath -x aclocal.m4 -x Makefile.in -x makefile.in -x configure -x omf.make -x xmldocs.make -x gnome-doc-utils.make -x gnome-doc-utils.m4 -x intltool.m4 -x intltool-extract -x intltool-extract.in -x intltool-merge -x intltool-merge.in -x intltool-update -x intltool-update.in -x '*.info' -x stamp-vti -x version.texi origsrc/gnucash-2.2.5/src/gnome-search/Makefile.am src/gnucash-2.2.5/src/gnome-search/Makefile.am
+--- origsrc/gnucash-2.2.5/src/gnome-search/Makefile.am	2008-01-07 19:06:45.000000000 -0600
++++ src/gnucash-2.2.5/src/gnome-search/Makefile.am	2008-06-29 14:04:20.687500000 -0500
+@@ -48,7 +48,7 @@
+   search-reconciled.h \
+   search-string.h
+ 
+-libgncmod_gnome_search_la_LDFLAGS = -avoid-version
++libgncmod_gnome_search_la_LDFLAGS = $(module) -avoid-version
+ 
+ libgncmod_gnome_search_la_LIBADD = \
+   ${top_builddir}/src/gnome-utils/libgncmod-gnome-utils.la \
+diff -urN -x CYGWIN-PATCHES -x 'aclocal.m4~' -x aclocal.m4t -x autom4te.cache -x config.cache -x config.log -x config.status -x config.h -x '*config.h.in' -x ABOUT-NLS -x Makefile.in.in -x Makevars.template -x '*SlackBuild*' -x '*.egg-info' -x '*.class' -x '*.pyc' -x '*.mo' -x '*.gmo' -x '*.orig' -x '*.rej' -x '*.spec' -x '*.temp' -x '*~' -x '*.stackdump' -x COPYING -x INSTALL -x compile -x config-ml.in -x config.guess -x config.sub -x depcomp -x elisp-comp -x install-sh -x libtool.m4 -x ltoptions.m4 -x ltsugar.m4 -x ltversion.m4 -x 'lt~obsolete.m4' -x ltmain.sh -x mdate-sh -x missing -x mkinstalldirs -x py-compile -x symlink-tree -x texinfo.tex -x ylwrap -x config.rpath -x aclocal.m4 -x Makefile.in -x makefile.in -x configure -x omf.make -x xmldocs.make -x gnome-doc-utils.make -x gnome-doc-utils.m4 -x intltool.m4 -x intltool-extract -x intltool-extract.in -x intltool-merge -x intltool-merge.in -x intltool-update -x intltool-update.in -x '*.info' -x stamp-vti -x version.texi origsrc/gnucash-2.2.5/src/gnome-utils/Makefile.am src/gnucash-2.2.5/src/gnome-utils/Makefile.am
+--- origsrc/gnucash-2.2.5/src/gnome-utils/Makefile.am	2008-03-02 07:24:57.000000000 -0600
++++ src/gnucash-2.2.5/src/gnome-utils/Makefile.am	2008-06-29 14:04:20.734375000 -0500
+@@ -172,7 +172,7 @@
+   gnc-druid-provider-multifile-gnome.h \
+   search-param.h
+ 
+-libgncmod_gnome_utils_la_LDFLAGS = -avoid-version
++libgncmod_gnome_utils_la_LDFLAGS = $(module) -avoid-version
+ 
+ libgncmod_gnome_utils_la_LIBADD = \
+   ${top_builddir}/src/core-utils/libgnc-core-utils.la \
+@@ -294,7 +294,7 @@
+ MAINTAINERCLEANFILES = swig-gnome-utils.c
+ 
+ # FIXME: Symlinking directories only works on non-win32.
+-if !PLATFORM_WIN32
++if !OS_WIN32
+ #
+ # I hate inconsistent standards. Autotools puts help files into
+ # ${datadir}/gnome/help/${program} while the gnome2 libraries expect
+diff -urN -x CYGWIN-PATCHES -x 'aclocal.m4~' -x aclocal.m4t -x autom4te.cache -x config.cache -x config.log -x config.status -x config.h -x '*config.h.in' -x ABOUT-NLS -x Makefile.in.in -x Makevars.template -x '*SlackBuild*' -x '*.egg-info' -x '*.class' -x '*.pyc' -x '*.mo' -x '*.gmo' -x '*.orig' -x '*.rej' -x '*.spec' -x '*.temp' -x '*~' -x '*.stackdump' -x COPYING -x INSTALL -x compile -x config-ml.in -x config.guess -x config.sub -x depcomp -x elisp-comp -x install-sh -x libtool.m4 -x ltoptions.m4 -x ltsugar.m4 -x ltversion.m4 -x 'lt~obsolete.m4' -x ltmain.sh -x mdate-sh -x missing -x mkinstalldirs -x py-compile -x symlink-tree -x texinfo.tex -x ylwrap -x config.rpath -x aclocal.m4 -x Makefile.in -x makefile.in -x configure -x omf.make -x xmldocs.make -x gnome-doc-utils.make -x gnome-doc-utils.m4 -x intltool.m4 -x intltool-extract -x intltool-extract.in -x intltool-merge -x intltool-merge.in -x intltool-update -x intltool-update.in -x '*.info' -x stamp-vti -x version.texi origsrc/gnucash-2.2.5/src/import-export/Makefile.am src/gnucash-2.2.5/src/import-export/Makefile.am
+--- origsrc/gnucash-2.2.5/src/import-export/Makefile.am	2008-01-07 19:05:46.000000000 -0600
++++ src/gnucash-2.2.5/src/import-export/Makefile.am	2008-06-29 14:04:20.750000000 -0500
+@@ -39,7 +39,7 @@
+   import-utilities.h \
+   gnc-import-format-gnome.h
+ 
+-libgncmod_generic_import_la_LDFLAGS = -avoid-version
++libgncmod_generic_import_la_LDFLAGS = $(module) -avoid-version
+ 
+ libgncmod_generic_import_la_LIBADD = \
+   ${top_builddir}/src/gnome-utils/libgncmod-gnome-utils.la \
+diff -urN -x CYGWIN-PATCHES -x 'aclocal.m4~' -x aclocal.m4t -x autom4te.cache -x config.cache -x config.log -x config.status -x config.h -x '*config.h.in' -x ABOUT-NLS -x Makefile.in.in -x Makevars.template -x '*SlackBuild*' -x '*.egg-info' -x '*.class' -x '*.pyc' -x '*.mo' -x '*.gmo' -x '*.orig' -x '*.rej' -x '*.spec' -x '*.temp' -x '*~' -x '*.stackdump' -x COPYING -x INSTALL -x compile -x config-ml.in -x config.guess -x config.sub -x depcomp -x elisp-comp -x install-sh -x libtool.m4 -x ltoptions.m4 -x ltsugar.m4 -x ltversion.m4 -x 'lt~obsolete.m4' -x ltmain.sh -x mdate-sh -x missing -x mkinstalldirs -x py-compile -x symlink-tree -x texinfo.tex -x ylwrap -x config.rpath -x aclocal.m4 -x Makefile.in -x makefile.in -x configure -x omf.make -x xmldocs.make -x gnome-doc-utils.make -x gnome-doc-utils.m4 -x intltool.m4 -x intltool-extract -x intltool-extract.in -x intltool-merge -x intltool-merge.in -x intltool-update -x intltool-update.in -x '*.info' -x stamp-vti -x version.texi origsrc/gnucash-2.2.5/src/import-export/hbci/Makefile.am src/gnucash-2.2.5/src/import-export/hbci/Makefile.am
+--- origsrc/gnucash-2.2.5/src/import-export/hbci/Makefile.am	2008-01-07 19:05:45.000000000 -0600
++++ src/gnucash-2.2.5/src/import-export/hbci/Makefile.am	2008-06-29 14:04:20.750000000 -0500
+@@ -42,7 +42,7 @@
+   hbci-interaction.h \
+   hbci-interactionP.h
+ 
+-libgncmod_hbci_la_LDFLAGS = -avoid-version
++libgncmod_hbci_la_LDFLAGS = $(module) -avoid-version
+ 
+ libgncmod_hbci_la_LIBADD = \
+   ${top_builddir}/src/import-export/libgncmod-generic-import.la \
+diff -urN -x CYGWIN-PATCHES -x 'aclocal.m4~' -x aclocal.m4t -x autom4te.cache -x config.cache -x config.log -x config.status -x config.h -x '*config.h.in' -x ABOUT-NLS -x Makefile.in.in -x Makevars.template -x '*SlackBuild*' -x '*.egg-info' -x '*.class' -x '*.pyc' -x '*.mo' -x '*.gmo' -x '*.orig' -x '*.rej' -x '*.spec' -x '*.temp' -x '*~' -x '*.stackdump' -x COPYING -x INSTALL -x compile -x config-ml.in -x config.guess -x config.sub -x depcomp -x elisp-comp -x install-sh -x libtool.m4 -x ltoptions.m4 -x ltsugar.m4 -x ltversion.m4 -x 'lt~obsolete.m4' -x ltmain.sh -x mdate-sh -x missing -x mkinstalldirs -x py-compile -x symlink-tree -x texinfo.tex -x ylwrap -x config.rpath -x aclocal.m4 -x Makefile.in -x makefile.in -x configure -x omf.make -x xmldocs.make -x gnome-doc-utils.make -x gnome-doc-utils.m4 -x intltool.m4 -x intltool-extract -x intltool-extract.in -x intltool-merge -x intltool-merge.in -x intltool-update -x intltool-update.in -x '*.info' -x stamp-vti -x version.texi origsrc/gnucash-2.2.5/src/import-export/log-replay/Makefile.am src/gnucash-2.2.5/src/import-export/log-replay/Makefile.am
+--- origsrc/gnucash-2.2.5/src/import-export/log-replay/Makefile.am	2008-01-07 19:05:45.000000000 -0600
++++ src/gnucash-2.2.5/src/import-export/log-replay/Makefile.am	2008-06-29 14:04:20.765625000 -0500
+@@ -11,7 +11,7 @@
+   gnc-log-replay.h \
+   gnc-plugin-log-replay.h
+ 
+-libgncmod_log_replay_la_LDFLAGS = -avoid-version
++libgncmod_log_replay_la_LDFLAGS = $(module) -avoid-version
+ 
+ libgncmod_log_replay_la_LIBADD = \
+   ${top_builddir}/src/gnome-utils/libgncmod-gnome-utils.la \
+diff -urN -x CYGWIN-PATCHES -x 'aclocal.m4~' -x aclocal.m4t -x autom4te.cache -x config.cache -x config.log -x config.status -x config.h -x '*config.h.in' -x ABOUT-NLS -x Makefile.in.in -x Makevars.template -x '*SlackBuild*' -x '*.egg-info' -x '*.class' -x '*.pyc' -x '*.mo' -x '*.gmo' -x '*.orig' -x '*.rej' -x '*.spec' -x '*.temp' -x '*~' -x '*.stackdump' -x COPYING -x INSTALL -x compile -x config-ml.in -x config.guess -x config.sub -x depcomp -x elisp-comp -x install-sh -x libtool.m4 -x ltoptions.m4 -x ltsugar.m4 -x ltversion.m4 -x 'lt~obsolete.m4' -x ltmain.sh -x mdate-sh -x missing -x mkinstalldirs -x py-compile -x symlink-tree -x texinfo.tex -x ylwrap -x config.rpath -x aclocal.m4 -x Makefile.in -x makefile.in -x configure -x omf.make -x xmldocs.make -x gnome-doc-utils.make -x gnome-doc-utils.m4 -x intltool.m4 -x intltool-extract -x intltool-extract.in -x intltool-merge -x intltool-merge.in -x intltool-update -x intltool-update.in -x '*.info' -x stamp-vti -x version.texi origsrc/gnucash-2.2.5/src/import-export/ofx/Makefile.am src/gnucash-2.2.5/src/import-export/ofx/Makefile.am
+--- origsrc/gnucash-2.2.5/src/import-export/ofx/Makefile.am	2008-01-07 19:05:41.000000000 -0600
++++ src/gnucash-2.2.5/src/import-export/ofx/Makefile.am	2008-06-29 14:04:20.796875000 -0500
+@@ -11,7 +11,7 @@
+   gnc-ofx-import.h \
+   gnc-plugin-ofx.h
+ 
+-libgncmod_ofx_la_LDFLAGS = -avoid-version
++libgncmod_ofx_la_LDFLAGS = $(module) -avoid-version
+ 
+ libgncmod_ofx_la_LIBADD = \
+   ${top_builddir}/src/import-export/libgncmod-generic-import.la \
+diff -urN -x CYGWIN-PATCHES -x 'aclocal.m4~' -x aclocal.m4t -x autom4te.cache -x config.cache -x config.log -x config.status -x config.h -x '*config.h.in' -x ABOUT-NLS -x Makefile.in.in -x Makevars.template -x '*SlackBuild*' -x '*.egg-info' -x '*.class' -x '*.pyc' -x '*.mo' -x '*.gmo' -x '*.orig' -x '*.rej' -x '*.spec' -x '*.temp' -x '*~' -x '*.stackdump' -x COPYING -x INSTALL -x compile -x config-ml.in -x config.guess -x config.sub -x depcomp -x elisp-comp -x install-sh -x libtool.m4 -x ltoptions.m4 -x ltsugar.m4 -x ltversion.m4 -x 'lt~obsolete.m4' -x ltmain.sh -x mdate-sh -x missing -x mkinstalldirs -x py-compile -x symlink-tree -x texinfo.tex -x ylwrap -x config.rpath -x aclocal.m4 -x Makefile.in -x makefile.in -x configure -x omf.make -x xmldocs.make -x gnome-doc-utils.make -x gnome-doc-utils.m4 -x intltool.m4 -x intltool-extract -x intltool-extract.in -x intltool-merge -x intltool-merge.in -x intltool-update -x intltool-update.in -x '*.info' -x stamp-vti -x version.texi origsrc/gnucash-2.2.5/src/import-export/qif/Makefile.am src/gnucash-2.2.5/src/import-export/qif/Makefile.am
+--- origsrc/gnucash-2.2.5/src/import-export/qif/Makefile.am	2008-01-07 19:05:43.000000000 -0600
++++ src/gnucash-2.2.5/src/import-export/qif/Makefile.am	2008-06-29 14:04:20.796875000 -0500
+@@ -19,6 +19,8 @@
+   qif-objects-p.h \
+   qif-parse.h
+ 
++libgncmod_qif_la_LDFLAGS = $(module) -avoid-version
++
+ libgncmod_qif_la_LIBADD = \
+   ${top_builddir}/src/import-export/libgncmod-generic-import.la \
+   ${top_builddir}/src/engine/libgncmod-engine.la \
+diff -urN -x CYGWIN-PATCHES -x 'aclocal.m4~' -x aclocal.m4t -x autom4te.cache -x config.cache -x config.log -x config.status -x config.h -x '*config.h.in' -x ABOUT-NLS -x Makefile.in.in -x Makevars.template -x '*SlackBuild*' -x '*.egg-info' -x '*.class' -x '*.pyc' -x '*.mo' -x '*.gmo' -x '*.orig' -x '*.rej' -x '*.spec' -x '*.temp' -x '*~' -x '*.stackdump' -x COPYING -x INSTALL -x compile -x config-ml.in -x config.guess -x config.sub -x depcomp -x elisp-comp -x install-sh -x libtool.m4 -x ltoptions.m4 -x ltsugar.m4 -x ltversion.m4 -x 'lt~obsolete.m4' -x ltmain.sh -x mdate-sh -x missing -x mkinstalldirs -x py-compile -x symlink-tree -x texinfo.tex -x ylwrap -x config.rpath -x aclocal.m4 -x Makefile.in -x makefile.in -x configure -x omf.make -x xmldocs.make -x gnome-doc-utils.make -x gnome-doc-utils.m4 -x intltool.m4 -x intltool-extract -x intltool-extract.in -x intltool-merge -x intltool-merge.in -x intltool-update -x intltool-update.in -x '*.info' -x stamp-vti -x version.texi origsrc/gnucash-2.2.5/src/import-export/qif-import/Makefile.am src/gnucash-2.2.5/src/import-export/qif-import/Makefile.am
+--- origsrc/gnucash-2.2.5/src/import-export/qif-import/Makefile.am	2008-04-25 17:37:13.000000000 -0500
++++ src/gnucash-2.2.5/src/import-export/qif-import/Makefile.am	2008-06-29 14:04:20.812500000 -0500
+@@ -15,7 +15,7 @@
+   gnc-druid-test.h \
+   gnc-plugin-qif-import.h
+ 
+-libgncmod_qif_import_la_LDFLAGS = -avoid-version
++libgncmod_qif_import_la_LDFLAGS = $(module) -avoid-version
+ 
+ libgncmod_qif_import_la_LIBADD = \
+   ${top_builddir}/src/import-export/libgncmod-generic-import.la \
+diff -urN -x CYGWIN-PATCHES -x 'aclocal.m4~' -x aclocal.m4t -x autom4te.cache -x config.cache -x config.log -x config.status -x config.h -x '*config.h.in' -x ABOUT-NLS -x Makefile.in.in -x Makevars.template -x '*SlackBuild*' -x '*.egg-info' -x '*.class' -x '*.pyc' -x '*.mo' -x '*.gmo' -x '*.orig' -x '*.rej' -x '*.spec' -x '*.temp' -x '*~' -x '*.stackdump' -x COPYING -x INSTALL -x compile -x config-ml.in -x config.guess -x config.sub -x depcomp -x elisp-comp -x install-sh -x libtool.m4 -x ltoptions.m4 -x ltsugar.m4 -x ltversion.m4 -x 'lt~obsolete.m4' -x ltmain.sh -x mdate-sh -x missing -x mkinstalldirs -x py-compile -x symlink-tree -x texinfo.tex -x ylwrap -x config.rpath -x aclocal.m4 -x Makefile.in -x makefile.in -x configure -x omf.make -x xmldocs.make -x gnome-doc-utils.make -x gnome-doc-utils.m4 -x intltool.m4 -x intltool-extract -x intltool-extract.in -x intltool-merge -x intltool-merge.in -x intltool-update -x intltool-update.in -x '*.info' -x stamp-vti -x version.texi origsrc/gnucash-2.2.5/src/import-export/qif-io-core/Makefile.am src/gnucash-2.2.5/src/import-export/qif-io-core/Makefile.am
+--- origsrc/gnucash-2.2.5/src/import-export/qif-io-core/Makefile.am	2008-01-07 19:05:42.000000000 -0600
++++ src/gnucash-2.2.5/src/import-export/qif-io-core/Makefile.am	2008-06-29 14:04:20.843750000 -0500
+@@ -6,6 +6,8 @@
+ 
+ libgncmod_qifiocore_la_SOURCES = gncmod-qifiocore.c
+ 
++libgncmod_qifiocore_la_LDFLAGS = $(module) -avoid-version
++
+ noinst_DATA = .scm-links
+ 
+ gncscmdir = ${GNC_SHAREDIR}/scm
+diff -urN -x CYGWIN-PATCHES -x 'aclocal.m4~' -x aclocal.m4t -x autom4te.cache -x config.cache -x config.log -x config.status -x config.h -x '*config.h.in' -x ABOUT-NLS -x Makefile.in.in -x Makevars.template -x '*SlackBuild*' -x '*.egg-info' -x '*.class' -x '*.pyc' -x '*.mo' -x '*.gmo' -x '*.orig' -x '*.rej' -x '*.spec' -x '*.temp' -x '*~' -x '*.stackdump' -x COPYING -x INSTALL -x compile -x config-ml.in -x config.guess -x config.sub -x depcomp -x elisp-comp -x install-sh -x libtool.m4 -x ltoptions.m4 -x ltsugar.m4 -x ltversion.m4 -x 'lt~obsolete.m4' -x ltmain.sh -x mdate-sh -x missing -x mkinstalldirs -x py-compile -x symlink-tree -x texinfo.tex -x ylwrap -x config.rpath -x aclocal.m4 -x Makefile.in -x makefile.in -x configure -x omf.make -x xmldocs.make -x gnome-doc-utils.make -x gnome-doc-utils.m4 -x intltool.m4 -x intltool-extract -x intltool-extract.in -x intltool-merge -x intltool-merge.in -x intltool-update -x intltool-update.in -x '*.info' -x stamp-vti -x version.texi origsrc/gnucash-2.2.5/src/register/ledger-core/Makefile.am src/gnucash-2.2.5/src/register/ledger-core/Makefile.am
+--- origsrc/gnucash-2.2.5/src/register/ledger-core/Makefile.am	2008-01-07 19:05:30.000000000 -0600
++++ src/gnucash-2.2.5/src/register/ledger-core/Makefile.am	2008-06-29 14:04:20.859375000 -0500
+@@ -23,7 +23,7 @@
+   split-register-model-save.h \
+   split-register-p.h
+ 
+-libgncmod_ledger_core_la_LDFLAGS = -avoid-version
++libgncmod_ledger_core_la_LDFLAGS = $(module) -avoid-version
+ 
+ libgncmod_ledger_core_la_LIBADD = \
+   ${top_builddir}/src/register/register-gnome/libgncmod-register-gnome.la \
+diff -urN -x CYGWIN-PATCHES -x 'aclocal.m4~' -x aclocal.m4t -x autom4te.cache -x config.cache -x config.log -x config.status -x config.h -x '*config.h.in' -x ABOUT-NLS -x Makefile.in.in -x Makevars.template -x '*SlackBuild*' -x '*.egg-info' -x '*.class' -x '*.pyc' -x '*.mo' -x '*.gmo' -x '*.orig' -x '*.rej' -x '*.spec' -x '*.temp' -x '*~' -x '*.stackdump' -x COPYING -x INSTALL -x compile -x config-ml.in -x config.guess -x config.sub -x depcomp -x elisp-comp -x install-sh -x libtool.m4 -x ltoptions.m4 -x ltsugar.m4 -x ltversion.m4 -x 'lt~obsolete.m4' -x ltmain.sh -x mdate-sh -x missing -x mkinstalldirs -x py-compile -x symlink-tree -x texinfo.tex -x ylwrap -x config.rpath -x aclocal.m4 -x Makefile.in -x makefile.in -x configure -x omf.make -x xmldocs.make -x gnome-doc-utils.make -x gnome-doc-utils.m4 -x intltool.m4 -x intltool-extract -x intltool-extract.in -x intltool-merge -x intltool-merge.in -x intltool-update -x intltool-update.in -x '*.info' -x stamp-vti -x version.texi origsrc/gnucash-2.2.5/src/register/register-core/Makefile.am src/gnucash-2.2.5/src/register/register-core/Makefile.am
+--- origsrc/gnucash-2.2.5/src/register/register-core/Makefile.am	2008-01-07 19:05:31.000000000 -0600
++++ src/gnucash-2.2.5/src/register/register-core/Makefile.am	2008-06-29 14:04:20.859375000 -0500
+@@ -2,7 +2,7 @@
+ 
+ pkglib_LTLIBRARIES = libgncmod-register-core.la
+ 
+-libgncmod_register_core_la_LDFLAGS = -avoid-version
++libgncmod_register_core_la_LDFLAGS = $(module) -avoid-version
+ 
+ libgncmod_register_core_la_LIBADD = \
+   ${top_builddir}/src/gnc-module/libgnc-module.la \
+diff -urN -x CYGWIN-PATCHES -x 'aclocal.m4~' -x aclocal.m4t -x autom4te.cache -x config.cache -x config.log -x config.status -x config.h -x '*config.h.in' -x ABOUT-NLS -x Makefile.in.in -x Makevars.template -x '*SlackBuild*' -x '*.egg-info' -x '*.class' -x '*.pyc' -x '*.mo' -x '*.gmo' -x '*.orig' -x '*.rej' -x '*.spec' -x '*.temp' -x '*~' -x '*.stackdump' -x COPYING -x INSTALL -x compile -x config-ml.in -x config.guess -x config.sub -x depcomp -x elisp-comp -x install-sh -x libtool.m4 -x ltoptions.m4 -x ltsugar.m4 -x ltversion.m4 -x 'lt~obsolete.m4' -x ltmain.sh -x mdate-sh -x missing -x mkinstalldirs -x py-compile -x symlink-tree -x texinfo.tex -x ylwrap -x config.rpath -x aclocal.m4 -x Makefile.in -x makefile.in -x configure -x omf.make -x xmldocs.make -x gnome-doc-utils.make -x gnome-doc-utils.m4 -x intltool.m4 -x intltool-extract -x intltool-extract.in -x intltool-merge -x intltool-merge.in -x intltool-update -x intltool-update.in -x '*.info' -x stamp-vti -x version.texi origsrc/gnucash-2.2.5/src/register/register-gnome/Makefile.am src/gnucash-2.2.5/src/register/register-gnome/Makefile.am
+--- origsrc/gnucash-2.2.5/src/register/register-gnome/Makefile.am	2008-01-07 19:05:28.000000000 -0600
++++ src/gnucash-2.2.5/src/register/register-gnome/Makefile.am	2008-06-29 14:04:20.890625000 -0500
+@@ -2,7 +2,7 @@
+ 
+ pkglib_LTLIBRARIES = libgncmod-register-gnome.la
+ 
+-libgncmod_register_gnome_la_LDFLAGS = -avoid-version
++libgncmod_register_gnome_la_LDFLAGS = $(module) -avoid-version
+ 
+ libgncmod_register_gnome_la_LIBADD = \
+   ${top_builddir}/src/register/register-core/libgncmod-register-core.la \
+diff -urN -x CYGWIN-PATCHES -x 'aclocal.m4~' -x aclocal.m4t -x autom4te.cache -x config.cache -x config.log -x config.status -x config.h -x '*config.h.in' -x ABOUT-NLS -x Makefile.in.in -x Makevars.template -x '*SlackBuild*' -x '*.egg-info' -x '*.class' -x '*.pyc' -x '*.mo' -x '*.gmo' -x '*.orig' -x '*.rej' -x '*.spec' -x '*.temp' -x '*~' -x '*.stackdump' -x COPYING -x INSTALL -x compile -x config-ml.in -x config.guess -x config.sub -x depcomp -x elisp-comp -x install-sh -x libtool.m4 -x ltoptions.m4 -x ltsugar.m4 -x ltversion.m4 -x 'lt~obsolete.m4' -x ltmain.sh -x mdate-sh -x missing -x mkinstalldirs -x py-compile -x symlink-tree -x texinfo.tex -x ylwrap -x config.rpath -x aclocal.m4 -x Makefile.in -x makefile.in -x configure -x omf.make -x xmldocs.make -x gnome-doc-utils.make -x gnome-doc-utils.m4 -x intltool.m4 -x intltool-extract -x intltool-extract.in -x intltool-merge -x intltool-merge.in -x intltool-update -x intltool-update.in -x '*.info' -x stamp-vti -x version.texi origsrc/gnucash-2.2.5/src/report/locale-specific/us/Makefile.am src/gnucash-2.2.5/src/report/locale-specific/us/Makefile.am
+--- origsrc/gnucash-2.2.5/src/report/locale-specific/us/Makefile.am	2008-01-07 19:05:50.000000000 -0600
++++ src/gnucash-2.2.5/src/report/locale-specific/us/Makefile.am	2008-06-29 14:04:20.906250000 -0500
+@@ -5,7 +5,7 @@
+ libgncmod_locale_reports_us_la_SOURCES = \
+   gncmod-locale-reports-us.c 
+ 
+-libgncmod_locale_reports_us_la_LDFLAGS = -avoid-version
++libgncmod_locale_reports_us_la_LDFLAGS = $(module) -avoid-version
+ 
+ libgncmod_locale_reports_us_la_LIBADD = \
+   ${top_builddir}/src/gnc-module/libgnc-module.la \
+diff -urN -x CYGWIN-PATCHES -x 'aclocal.m4~' -x aclocal.m4t -x autom4te.cache -x config.cache -x config.log -x config.status -x config.h -x '*config.h.in' -x ABOUT-NLS -x Makefile.in.in -x Makevars.template -x '*SlackBuild*' -x '*.egg-info' -x '*.class' -x '*.pyc' -x '*.mo' -x '*.gmo' -x '*.orig' -x '*.rej' -x '*.spec' -x '*.temp' -x '*~' -x '*.stackdump' -x COPYING -x INSTALL -x compile -x config-ml.in -x config.guess -x config.sub -x depcomp -x elisp-comp -x install-sh -x libtool.m4 -x ltoptions.m4 -x ltsugar.m4 -x ltversion.m4 -x 'lt~obsolete.m4' -x ltmain.sh -x mdate-sh -x missing -x mkinstalldirs -x py-compile -x symlink-tree -x texinfo.tex -x ylwrap -x config.rpath -x aclocal.m4 -x Makefile.in -x makefile.in -x configure -x omf.make -x xmldocs.make -x gnome-doc-utils.make -x gnome-doc-utils.m4 -x intltool.m4 -x intltool-extract -x intltool-extract.in -x intltool-merge -x intltool-merge.in -x intltool-update -x intltool-update.in -x '*.info' -x stamp-vti -x version.texi origsrc/gnucash-2.2.5/src/report/report-gnome/Makefile.am src/gnucash-2.2.5/src/report/report-gnome/Makefile.am
+--- origsrc/gnucash-2.2.5/src/report/report-gnome/Makefile.am	2008-01-07 19:05:55.000000000 -0600
++++ src/gnucash-2.2.5/src/report/report-gnome/Makefile.am	2008-06-29 14:04:20.921875000 -0500
+@@ -34,7 +34,7 @@
+   gnc-plugin-page-report.h \
+   window-report.h
+ 
+-libgncmod_report_gnome_la_LDFLAGS = -avoid-version
++libgncmod_report_gnome_la_LDFLAGS = $(module) -avoid-version
+ 
+ libgncmod_report_gnome_la_LIBADD = \
+   ${top_builddir}/src/core-utils/libgnc-core-utils.la \
+diff -urN -x CYGWIN-PATCHES -x 'aclocal.m4~' -x aclocal.m4t -x autom4te.cache -x config.cache -x config.log -x config.status -x config.h -x '*config.h.in' -x ABOUT-NLS -x Makefile.in.in -x Makevars.template -x '*SlackBuild*' -x '*.egg-info' -x '*.class' -x '*.pyc' -x '*.mo' -x '*.gmo' -x '*.orig' -x '*.rej' -x '*.spec' -x '*.temp' -x '*~' -x '*.stackdump' -x COPYING -x INSTALL -x compile -x config-ml.in -x config.guess -x config.sub -x depcomp -x elisp-comp -x install-sh -x libtool.m4 -x ltoptions.m4 -x ltsugar.m4 -x ltversion.m4 -x 'lt~obsolete.m4' -x ltmain.sh -x mdate-sh -x missing -x mkinstalldirs -x py-compile -x symlink-tree -x texinfo.tex -x ylwrap -x config.rpath -x aclocal.m4 -x Makefile.in -x makefile.in -x configure -x omf.make -x xmldocs.make -x gnome-doc-utils.make -x gnome-doc-utils.m4 -x intltool.m4 -x intltool-extract -x intltool-extract.in -x intltool-merge -x intltool-merge.in -x intltool-update -x intltool-update.in -x '*.info' -x stamp-vti -x version.texi origsrc/gnucash-2.2.5/src/report/report-system/Makefile.am src/gnucash-2.2.5/src/report/report-system/Makefile.am
+--- origsrc/gnucash-2.2.5/src/report/report-system/Makefile.am	2008-01-07 19:05:54.000000000 -0600
++++ src/gnucash-2.2.5/src/report/report-system/Makefile.am	2008-06-29 14:04:20.953125000 -0500
+@@ -11,7 +11,7 @@
+ gncinclude_HEADERS = \
+   gnc-report.h
+ 
+-libgncmod_report_system_la_LDFLAGS = -avoid-version
++libgncmod_report_system_la_LDFLAGS = $(module) -avoid-version
+ 
+ libgncmod_report_system_la_LIBADD = \
+   ${top_builddir}/src/gnc-module/libgnc-module.la \
+diff -urN -x CYGWIN-PATCHES -x 'aclocal.m4~' -x aclocal.m4t -x autom4te.cache -x config.cache -x config.log -x config.status -x config.h -x '*config.h.in' -x ABOUT-NLS -x Makefile.in.in -x Makevars.template -x '*SlackBuild*' -x '*.egg-info' -x '*.class' -x '*.pyc' -x '*.mo' -x '*.gmo' -x '*.orig' -x '*.rej' -x '*.spec' -x '*.temp' -x '*~' -x '*.stackdump' -x COPYING -x INSTALL -x compile -x config-ml.in -x config.guess -x config.sub -x depcomp -x elisp-comp -x install-sh -x libtool.m4 -x ltoptions.m4 -x ltsugar.m4 -x ltversion.m4 -x 'lt~obsolete.m4' -x ltmain.sh -x mdate-sh -x missing -x mkinstalldirs -x py-compile -x symlink-tree -x texinfo.tex -x ylwrap -x config.rpath -x aclocal.m4 -x Makefile.in -x makefile.in -x configure -x omf.make -x xmldocs.make -x gnome-doc-utils.make -x gnome-doc-utils.m4 -x intltool.m4 -x intltool-extract -x intltool-extract.in -x intltool-merge -x intltool-merge.in -x intltool-update -x intltool-update.in -x '*.info' -x stamp-vti -x version.texi origsrc/gnucash-2.2.5/src/report/standard-reports/Makefile.am src/gnucash-2.2.5/src/report/standard-reports/Makefile.am
+--- origsrc/gnucash-2.2.5/src/report/standard-reports/Makefile.am	2008-01-07 19:05:52.000000000 -0600
++++ src/gnucash-2.2.5/src/report/standard-reports/Makefile.am	2008-06-29 14:04:20.968750000 -0500
+@@ -5,7 +5,7 @@
+ libgncmod_standard_reports_la_SOURCES = \
+   gncmod-standard-reports.c
+ 
+-libgncmod_standard_reports_la_LDFLAGS = -avoid-version
++libgncmod_standard_reports_la_LDFLAGS = $(module) -avoid-version
+ 
+ libgncmod_standard_reports_la_LIBADD = \
+   ${top_builddir}/src/gnc-module/libgnc-module.la \
+diff -urN -x CYGWIN-PATCHES -x 'aclocal.m4~' -x aclocal.m4t -x autom4te.cache -x config.cache -x config.log -x config.status -x config.h -x '*config.h.in' -x ABOUT-NLS -x Makefile.in.in -x Makevars.template -x '*SlackBuild*' -x '*.egg-info' -x '*.class' -x '*.pyc' -x '*.mo' -x '*.gmo' -x '*.orig' -x '*.rej' -x '*.spec' -x '*.temp' -x '*~' -x '*.stackdump' -x COPYING -x INSTALL -x compile -x config-ml.in -x config.guess -x config.sub -x depcomp -x elisp-comp -x install-sh -x libtool.m4 -x ltoptions.m4 -x ltsugar.m4 -x ltversion.m4 -x 'lt~obsolete.m4' -x ltmain.sh -x mdate-sh -x missing -x mkinstalldirs -x py-compile -x symlink-tree -x texinfo.tex -x ylwrap -x config.rpath -x aclocal.m4 -x Makefile.in -x makefile.in -x configure -x omf.make -x xmldocs.make -x gnome-doc-utils.make -x gnome-doc-utils.m4 -x intltool.m4 -x intltool-extract -x intltool-extract.in -x intltool-merge -x intltool-merge.in -x intltool-update -x intltool-update.in -x '*.info' -x stamp-vti -x version.texi origsrc/gnucash-2.2.5/src/tax/us/Makefile.am src/gnucash-2.2.5/src/tax/us/Makefile.am
+--- origsrc/gnucash-2.2.5/src/tax/us/Makefile.am	2008-01-07 19:06:06.000000000 -0600
++++ src/gnucash-2.2.5/src/tax/us/Makefile.am	2008-06-29 14:04:20.968750000 -0500
+@@ -5,7 +5,7 @@
+ libgncmod_tax_us_la_SOURCES = \
+   gncmod-tax-us.c 
+ 
+-libgncmod_tax_us_la_LDFLAGS = -avoid-version
++libgncmod_tax_us_la_LDFLAGS = $(module) -avoid-version
+ 
+ libgncmod_tax_us_la_LIBADD = \
+  ${GUILE_LIBS} \
