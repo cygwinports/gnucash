@@ -1,0 +1,18 @@
+inherit gnome2
+
+DESCRIPTION="GNOME accounting software"
+HOMEPAGE="http://www.gnucash.org/"
+SRC_URI="mirror://sourceforge/${PN}/${P}.tar.bz2"
+
+PATCH_URI="
+	2.4.0-cygwin.patch
+	2.4.0-load-libgnc-gnome.patch
+	2.4.0-module-suffix.patch
+"
+
+DEPEND="libdbi-devel libgconf2-devel >=libgtk2.0-devel-2.12 libglade2.0-devel
+	libgnome-keyring-devel libgnomeui2-devel libgoffice0.8-devel guile-devel
+	libofx-devel libwebkit1.0-devel slib"
+
+ACLOCAL_FLAGS="-I macros"
+CYGCONF_ARGS="--disable-binreloc --with-html-engine=webkit"

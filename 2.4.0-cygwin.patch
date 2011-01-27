@@ -1,0 +1,95 @@
+--- origsrc/gnucash-2.4.0/configure.ac	2010-12-21 20:02:14.000000000 -0600
++++ src/gnucash-2.4.0/configure.ac	2011-01-26 23:11:21.448316900 -0600
+@@ -283,17 +283,20 @@ update to latest  darwin])
+           ], [AC_MSG_RESULT(no)])
+         LIBS="${saved_LIBS}"
+         AC_SUBST(HTMLHELP_LIBS)
++
++        REGEX_LIBS="-lregex"
++
++        # Adjust CFLAGS and LDFLAGS on Windows
++        CFLAGS="${CFLAGS} -mms-bitfields"
++        LDFLAGS="${LDFLAGS} -mwindows"
+         ;;
+       *)
+         AC_MSG_RESULT(no)
+         ;;
+     esac
+ 
+-    REGEX_LIBS="-lregex"
+-
+-    # Adjust CFLAGS and LDFLAGS on Windows
+-    CFLAGS="${CFLAGS} -mms-bitfields"
+-    LDFLAGS="${LDFLAGS} -no-undefined -mwindows"
++    # Required by libtool on PE platforms
++    LDFLAGS="${LDFLAGS} -no-undefined"
+     ;;
+ 
+   *)
+--- origsrc/gnucash-2.4.0/src/bin/Makefile.am	2010-12-21 20:01:15.000000000 -0600
++++ src/gnucash-2.4.0/src/bin/Makefile.am	2011-01-26 23:53:31.051126000 -0600
+@@ -1,5 +1,5 @@
+ # Order is important here.
+-if !PLATFORM_WIN32
++if !OS_WIN32
+ SUBDIRS = . overrides test
+ else
+ SUBDIRS = . test
+@@ -24,7 +24,7 @@ AM_CPPFLAGS = -I${top_builddir} ${GLIB_C
+ SUFFIXES = .rc .res
+ 
+ # Some settings are platform dependent. Let's define them per platform.
+-if PLATFORM_WIN32
++if OS_WIN32
+ # Windows specific settings go here:
+ GNUCASH_RESOURCE_FILE = gnucash.rc
+ dist_noinst_DATA = gnucash.rc
+@@ -35,7 +35,7 @@ dist_noinst_DATA = gnucash.rc
+ configdir = ${GNC_CONFIGDIR}
+ config_DATA = environment
+ 
+-else !PLATFORM_WIN32
++else !OS_WIN32
+ if PLATFORM_OSX_QUARTZ
+ # OSX/Quartz specific settings go here:
+ PLATFORM_FILES = gnucash-setup-env \
+@@ -54,7 +54,7 @@ configdir = ${GNC_CONFIGDIR}
+ config_DATA = environment
+ 
+ endif !PLATFORM_OSX_QUARTZ
+-endif !PLATFORM_WIN32
++endif !OS_WIN32
+ 
+ BIN_NAME = gnucash
+ bin_PROGRAMS = ${BIN_NAME}
+@@ -122,7 +122,7 @@ endif
+ 
+ CLEANFILES = $(BUILT_SOURCES) ${config_DATA} ${PLATFORM_FILES}
+ 
+-if !PLATFORM_WIN32
++if !OS_WIN32
+ # The gnucash scripts don't make sense on Windows, so will only be
+ # generated and included on the other platforms.
+ # We handle gnucash scripts in a somewhat unexpected way, but we do
+--- origsrc/gnucash-2.4.0/src/gnome-utils/Makefile.am	2010-12-21 20:01:35.000000000 -0600
++++ src/gnucash-2.4.0/src/gnome-utils/Makefile.am	2011-01-26 23:12:09.293600300 -0600
+@@ -252,7 +252,7 @@ CLEANFILES = $(BUILT_SOURCES) gnucash .s
+ MAINTAINERCLEANFILES = swig-gnome-utils.c
+ 
+ # FIXME: Symlinking directories only works on non-win32.
+-if !PLATFORM_WIN32
++if !OS_WIN32
+ #
+ # I hate inconsistent standards. Autotools puts help files into
+ # ${datadir}/gnome/help/${program} while the gnome2 libraries expect
+--- origsrc/gnucash-2.4.0/src/html/Makefile.am	2010-12-21 20:01:12.000000000 -0600
++++ src/gnucash-2.4.0/src/html/Makefile.am	2011-01-26 23:14:20.926629800 -0600
+@@ -95,7 +95,7 @@ CLEANFILES = $(BUILT_SOURCES) gnucash
+ MAINTAINERCLEANFILES = swig-html.c
+ 
+ # FIXME: Symlinking directories only works on non-win32.
+-if !PLATFORM_WIN32
++if !OS_WIN32
+ #
+ # I hate inconsistent standards. Autotools puts help files into
+ # ${datadir}/gnome/help/${program} while the gnome2 libraries expect

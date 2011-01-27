@@ -1,0 +1,14 @@
+We can't load the DLLs directly on Cygwin, as they use the "cyg" prefix, 
+while the "libgncmod" prefix is required not only for module naming but 
+also for symbol lookup.
+
+--- origsrc/gnucash-2.4.0/src/gnc-module/gnc-module.c	2010-12-21 20:01:12.000000000 -0600
++++ src/gnucash-2.4.0/src/gnc-module/gnc-module.c	2011-01-27 02:27:10.950798500 -0600
+@@ -176,6 +176,7 @@ gnc_module_system_refresh(void)
+              * module loader load other libraries. And the filter should works on other platform.
+              */
+             if ((g_str_has_suffix(dent, "." G_MODULE_SUFFIX)
++                    || g_str_has_suffix(dent, ".la")
+                     || g_str_has_suffix(dent, ".dylib"))
+                     && g_str_has_prefix(dent, GNC_MODULE_PREFIX))
+             {
