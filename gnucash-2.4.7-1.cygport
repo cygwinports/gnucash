@@ -8,6 +8,7 @@ PATCH_URI="
 	2.4.0-cygwin.patch
 	2.4.0-load-libgnc-gnome.patch
 	2.4.0-module-suffix.patch
+	2.4.7-swig-cygwin.patch
 "
 
 DEPEND="libdbi-devel libgconf2-devel >=libgtk2.0-devel-2.12 libglade2.0-devel
@@ -15,4 +16,9 @@ DEPEND="libdbi-devel libgconf2-devel >=libgtk2.0-devel-2.12 libglade2.0-devel
 	libofx-devel libwebkit1.0-devel slib"
 
 ACLOCAL_FLAGS="-I macros"
-CYGCONF_ARGS="--disable-binreloc --with-html-engine=webkit"
+CYGCONF_ARGS="--disable-binreloc --with-html-engine=gtkhtml"
+
+src_install() {
+	cd ${B}
+	cyginstall -j1
+}
