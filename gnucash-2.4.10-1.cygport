@@ -22,3 +22,5 @@ src_install() {
 	cd ${B}
 	cyginstall -j1
 }
+
+KEEP_LA_FILES="all"
