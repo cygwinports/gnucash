@@ -1,0 +1,49 @@
+inherit gnome2
+
+NAME="gnucash"
+VERSION=2.4.11
+RELEASE=1
+CATEGORY="Gnome Office"
+SUMMARY="GNOME financial accounting program"
+DESCRIPTION="GnuCash is personal and small-business financial-accounting software.
+Designed to be easy to use, yet powerful and flexible, GnuCash allows you to
+track bank accounts, stocks, income and expenses. As quick and intuitive to use
+as a checkbook register, it is based on professional accounting principles to
+ensure balanced books and accurate reports."
+HOMEPAGE="http://www.gnucash.org/"
+SRC_URI="mirror://sourceforge/${PN}/${P}.tar.bz2"
+PATCH_URI="
+	2.4.0-cygwin.patch
+	2.4.0-load-libgnc-gnome.patch
+	2.4.0-module-suffix.patch
+	2.4.7-swig-cygwin.patch
+"
+
+PKG_NAMES="gnucash gnucash-devel"
+gnucash_REQUIRES="guile-www perl_vendor perl-Crypt-SSLeay perl-Date-Manip perl-Finance-Quote perl-HTML-TableExtract slib"
+gnucash_CONTENTS="--exclude=*.dll.a etc/ usr/bin/ usr/lib/gnucash/ usr/lib/*.la usr/share/"
+gnucash_devel_REQUIRES="guile-devel libgconf2-devel libglib2.0-devel libglade2.0-devel libgtk2.0-devel libgnome2-devel libgnomeui2-devel"
+gnucash_devel_CONTENTS="usr/include/ usr/lib/gnucash/*.a usr/lib/*.a"
+
+DEPEND="pkgconfig(gconf-2.0)
+	pkgconfig(gnome-keyring-1)
+	pkgconfig(gtk+-2.0)
+	pkgconfig(guile-1.8)
+	pkgconfig(libglade-2.0)
+	pkgconfig(libgnomeui-2.0)
+	pkgconfig(libgoffice-0.8)
+	pkgconfig(libgtkhtml-3.14)
+	pkgconfig(libofx)
+	libdbi-devel
+	slib"
+
+ACLOCAL_FLAGS="-I macros"
+CYGCONF_ARGS="--disable-binreloc --with-html-engine=gtkhtml"
+
+src_install() {
+	cd ${B}
+	cyginstall -j1
+	sed -i -e '/^dependency_libs=/d' ${D}/usr/lib/*.la ${D}/usr/lib/gnucash/*.la
+}
+
+KEEP_LA_FILES="all"
