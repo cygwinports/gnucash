@@ -1,6 +1,6 @@
 --- origsrc/gnucash-2.4.0/configure.ac	2010-12-21 20:02:14.000000000 -0600
 +++ src/gnucash-2.4.0/configure.ac	2011-01-26 23:11:21.448316900 -0600
-@@ -283,17 +283,20 @@ update to latest  darwin])
+@@ -283,17 +283,17 @@ update to latest  darwin])
            ], [AC_MSG_RESULT(no)])
          LIBS="${saved_LIBS}"
          AC_SUBST(HTMLHELP_LIBS)
@@ -15,17 +15,29 @@
          AC_MSG_RESULT(no)
          ;;
      esac
- 
+-
 -    REGEX_LIBS="-lregex"
 -
 -    # Adjust CFLAGS and LDFLAGS on Windows
 -    CFLAGS="${CFLAGS} -mms-bitfields"
 -    LDFLAGS="${LDFLAGS} -no-undefined -mwindows"
-+    # Required by libtool on PE platforms
-+    LDFLAGS="${LDFLAGS} -no-undefined"
      ;;
  
    *)
+@@ -1280,6 +1280,13 @@ else
+ fi
+ AC_MSG_RESULT($warnFLAGS)
+ 
++case $host_os in
++cygwin*|mingw*)
++  # Required by libtool on PE platforms
++  LDFLAGS="${LDFLAGS} -no-undefined"
++  ;;
++esac
++
+ ### --------------------------------------------------------------------------
+ ### Adjustments -- especially executables that aren't generated via
+ ### makefiles, so that we don't have an opportunity to adjust them
 --- origsrc/gnucash-2.4.0/src/bin/Makefile.am	2010-12-21 20:01:15.000000000 -0600
 +++ src/gnucash-2.4.0/src/bin/Makefile.am	2011-01-26 23:53:31.051126000 -0600
 @@ -1,5 +1,5 @@
