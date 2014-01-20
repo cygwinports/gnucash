@@ -20,7 +20,7 @@ PATCH_URI="
 "
 
 PKG_NAMES="gnucash gnucash-devel"
-gnucash_REQUIRES="guile-www perl-Crypt-SSLeay perl-Date-Manip perl-Finance-Quote perl-HTML-Parser perl-HTML-TableExtract perl-LWP slib"
+gnucash_REQUIRES="guile-www perl-Crypt-SSLeay perl-Date-Manip perl-Finance-Quote perl-HTML-Parser perl-HTML-TableExtract perl-LWP guile-slib"
 gnucash_CONTENTS="--exclude=*.dll.a etc/ usr/bin/ usr/lib/gnucash/ usr/lib/*.la usr/libexec/ usr/share/"
 gnucash_devel_REQUIRES="guile-devel libgconf2-devel libglib2.0-devel libglade2.0-devel libgtk2.0-devel libgnome2-devel libgnomeui2-devel"
 gnucash_devel_CONTENTS="usr/include/ usr/lib/gnucash/*.a usr/lib/*.a"
