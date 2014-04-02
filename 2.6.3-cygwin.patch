@@ -1,0 +1,145 @@
+--- origsrc/gnucash-2.6.3/configure.ac	2014-03-29 18:14:32.000000000 -0500
++++ src/gnucash-2.6.3/configure.ac	2014-04-01 22:23:19.464778500 -0500
+@@ -390,17 +390,17 @@ update to latest  darwin])
+           ], [AC_MSG_RESULT(no)])
+         LIBS="${saved_LIBS}"
+         AC_SUBST(HTMLHELP_LIBS)
++
++        REGEX_LIBS="-lregex"
++
++        # Adjust CFLAGS and LDFLAGS on Windows
++        CFLAGS="${CFLAGS} -mms-bitfields"
++        LDFLAGS="${LDFLAGS} -mwindows"
+         ;;
+       *)
+         AC_MSG_RESULT(no)
+         ;;
+     esac
+-
+-    REGEX_LIBS="-lregex"
+-
+-    # Adjust CFLAGS and LDFLAGS on Windows
+-    CFLAGS="${CFLAGS} -mms-bitfields"
+-    LDFLAGS="${LDFLAGS} -no-undefined -mwindows"
+     ;;
+ 
+   *)
+@@ -1322,6 +1322,13 @@ else
+ fi
+ AC_MSG_RESULT($warnFLAGS)
+ 
++case $host_os in
++cygwin*|mingw*)
++  # Required by libtool on PE platforms
++  LDFLAGS="${LDFLAGS} -no-undefined"
++  ;;
++esac
++
+ ### --------------------------------------------------------------------------
+ ### Adjustments -- especially executables that aren't generated via
+ ### makefiles, so that we don't have an opportunity to adjust them
+--- origsrc/gnucash-2.6.3/doc/Makefile.am	2014-03-01 13:55:35.000000000 -0600
++++ src/gnucash-2.6.3/doc/Makefile.am	2014-04-01 22:23:56.332960100 -0500
+@@ -54,7 +54,7 @@ tip_of_the_day.list: tip_of_the_day.list
+ 	                       -e 's/"* *[|] */|/' \
+                            -e 's:@-GNUCASH_LATEST_STABLE_SERIES-@:${GNUCASH_LATEST_STABLE_SERIES}:g' > $@
+ 	rm -f $@.tmp
+-if PLATFORM_WIN32
++if OS_WIN32
+ 	perl -pi.bak -e 's/" *$$//' $@
+ else
+ 	perl -pi.bak -e 's/" *$$/\n/' $@
+--- origsrc/gnucash-2.6.3/src/bin/Makefile.am	2014-03-01 13:55:35.000000000 -0600
++++ src/gnucash-2.6.3/src/bin/Makefile.am	2014-04-01 22:22:41.673979600 -0500
+@@ -1,5 +1,5 @@
+ # Order is important here.
+-if !PLATFORM_WIN32
++if !OS_WIN32
+ SUBDIRS = . overrides test
+ else
+ SUBDIRS = . test
+@@ -27,7 +27,7 @@ config_DATA = environment
+ configdir = ${GNC_CONFIGDIR}
+ 
+ # Some settings are platform dependent. Let's define them per platform.
+-if PLATFORM_WIN32
++if OS_WIN32
+ # Windows specific settings go here:
+ GNUCASH_RESOURCE_FILE = gnucash.rc
+ dist_noinst_DATA = gnucash.rc
+@@ -35,11 +35,11 @@ dist_noinst_DATA = gnucash.rc
+ .rc.o:
+ 	$(AM_V_GEN)$(RC) -I${top_srcdir}/src/pixmaps -i '$<' --input-format=rc -o '$@' -O coff
+ 
+-else !PLATFORM_WIN32
++else !OS_WIN32
+ # All other platforms use these settings:
+ PLATFORM_FILES = gnucash-valgrind
+ 
+-endif !PLATFORM_WIN32
++endif !OS_WIN32
+ 
+ BIN_NAME = gnucash
+ bin_PROGRAMS = ${BIN_NAME}
+@@ -98,7 +98,7 @@ endif
+ 
+ CLEANFILES = $(BUILT_SOURCES) ${config_DATA} ${PLATFORM_FILES}
+ 
+-if !PLATFORM_WIN32
++if !OS_WIN32
+ # The gnucash scripts don't make sense on Windows, so will only be
+ # generated and included on the other platforms.
+ # We handle gnucash scripts in a somewhat unexpected way, but we do
+--- origsrc/gnucash-2.6.3/src/gnome-utils/Makefile.am	2014-03-01 13:55:35.000000000 -0600
++++ src/gnucash-2.6.3/src/gnome-utils/Makefile.am	2014-04-01 22:23:19.468779000 -0500
+@@ -280,7 +280,7 @@ CLEANFILES = $(BUILT_SOURCES) .scm-links
+ MAINTAINERCLEANFILES = swig-gnome-utils.c
+ 
+ # FIXME: Symlinking directories only works on non-win32.
+-if !PLATFORM_WIN32
++if !OS_WIN32
+ #
+ # I hate inconsistent standards. Autotools puts help files into
+ # ${datadir}/gnome/help/${program} while the gnome2 libraries expect
+--- origsrc/gnucash-2.6.3/src/html/Makefile.am	2014-03-01 13:55:35.000000000 -0600
++++ src/gnucash-2.6.3/src/html/Makefile.am	2014-04-01 22:23:19.472279400 -0500
+@@ -75,7 +75,7 @@ CLEANFILES = $(BUILT_SOURCES) gnucash
+ MAINTAINERCLEANFILES = swig-gnc-html.c
+ 
+ # FIXME: Symlinking directories only works on non-win32.
+-if !PLATFORM_WIN32
++if !OS_WIN32
+ #
+ # I hate inconsistent standards. Autotools puts help files into
+ # ${datadir}/gnome/help/${program} while the gnome2 libraries expect
+--- origsrc/gnucash-2.6.3/src/libqof/qof/guid.c	2014-03-01 13:55:35.000000000 -0600
++++ src/gnucash-2.6.3/src/libqof/qof/guid.c	2014-04-01 22:24:48.028524600 -0500
+@@ -54,7 +54,7 @@
+ /* Constants *******************************************************/
+ #define DEBUG_GUID 0
+ #define BLOCKSIZE 4096
+-#ifdef G_PLATFORM_WIN32
++#ifdef G_OS_WIN32
+ /* Win32 has a smaller pool of random bits, but the displayed warning confuses
+  * really a lot of people. Hence, I think we'd better switch off this warning
+  * for this particular known case. */
+--- origsrc/gnucash-2.6.3/test-templates/Makefile.decl	2014-03-01 13:55:36.000000000 -0600
++++ src/gnucash-2.6.3/test-templates/Makefile.decl	2014-04-01 22:25:10.179837500 -0500
+@@ -13,7 +13,7 @@ TEST_PROGS =
+ 
+ # test: run all tests in cwd and subdirs
+ test: test-nonrecursive
+-if !PLATFORM_WIN32
++if !OS_WIN32
+ 	@ for subdir in $(SUBDIRS) . ; do \
+ 	    test "$$subdir" = "." -o "$$subdir" = "po" || \
+ 	    ( cd $$subdir && $(MAKE) $(AM_MAKEFLAGS) $@ ) || exit $? ; \
+@@ -22,7 +22,7 @@ endif
+ 
+ # test-nonrecursive: run tests only in cwd
+ test-nonrecursive: ${TEST_PROGS}
+-if !PLATFORM_WIN32
++if !OS_WIN32
+ 	@test -z "${TEST_PROGS}" || MALLOC_CHECK_=2 MALLOC_PERTURB_=$$(($${RANDOM:-256} % 256)) ${GTESTER} --verbose ${TEST_PROGS}
+ endif
+ 

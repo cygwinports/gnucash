@@ -1,7 +1,7 @@
 inherit gnome2
 
 NAME="gnucash"
-VERSION=2.4.15
+VERSION=2.6.3
 RELEASE=1
 CATEGORY="Office"
 SUMMARY="GNOME financial accounting program"
@@ -11,38 +11,37 @@ track bank accounts, stocks, income and expenses. As quick and intuitive to use
 as a checkbook register, it is based on professional accounting principles to
 ensure balanced books and accurate reports."
 HOMEPAGE="http://www.gnucash.org/"
-SRC_URI="mirror://sourceforge/${PN}/${P}.tar.bz2"
+SRC_URI="mirror://sourceforge/gnucash/${NAME}-${VERSION}.tar.bz2"
 PATCH_URI="
-	2.4.0-cygwin.patch
-	2.4.0-load-libgnc-gnome.patch
+	2.6.3-cygwin.patch
 	2.4.0-module-suffix.patch
-	2.4.7-swig-cygwin.patch
+	2.6.3-swig-cygwin.patch
 "
 
 PKG_NAMES="gnucash gnucash-devel"
 gnucash_REQUIRES="guile-www perl-Crypt-SSLeay perl-Date-Manip perl-Finance-Quote perl-HTML-Parser perl-HTML-TableExtract perl-LWP guile-slib"
 gnucash_CONTENTS="--exclude=*.dll.a etc/ usr/bin/ usr/lib/gnucash/ usr/lib/*.la usr/libexec/ usr/share/"
-gnucash_devel_REQUIRES="guile-devel libgconf2-devel libglib2.0-devel libglade2.0-devel libgtk2.0-devel libgnome2-devel libgnomeui2-devel"
+gnucash_devel_REQUIRES="guile-devel libglib2.0-devel libgtk2.0-devel"
 gnucash_devel_CONTENTS="usr/include/ usr/lib/gnucash/*.a usr/lib/*.a"
 
-DEPEND="pkgconfig(gconf-2.0)
-	pkgconfig(gnome-keyring-1)
+DEPEND="pkgconfig(gnome-keyring-1)
 	pkgconfig(gtk+-2.0)
 	pkgconfig(guile-1.8)
-	pkgconfig(libglade-2.0)
-	pkgconfig(libgnomeui-2.0)
+	pkgconfig(libgnomecanvas-2.0)
 	pkgconfig(libgoffice-0.8)
-	pkgconfig(libgtkhtml-3.14)
 	pkgconfig(libofx)
+	pkgconfig(libxml-2.0)
+	pkgconfig(libxslt)
+	pkgconfig(webkit-1.0)
 	libdbi-devel
 	slib"
 
 ACLOCAL_FLAGS="-I macros"
-CYGCONF_ARGS="--disable-binreloc --with-html-engine=gtkhtml"
+CYGCONF_ARGS="--disable-binreloc"
 
 src_install() {
 	cd ${B}
-	cyginstall -j1
+	cyginstall -j1 test_qof_HEADERS=
 	sed -i -e '/^dependency_libs=/d' ${D}/usr/lib/*.la ${D}/usr/lib/gnucash/*.la
 }
 

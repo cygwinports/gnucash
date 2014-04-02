@@ -1,5 +1,5 @@
---- origsrc/gnucash-2.4.7/src/app-utils/swig-app-utils.c	2011-07-02 15:17:33.000000000 -0500
-+++ src/gnucash-2.4.7/src/app-utils/swig-app-utils.c	2011-07-10 19:30:22.652179300 -0500
+--- origsrc/gnucash-2.6.3/src/app-utils/swig-app-utils-guile.c	2014-03-29 18:54:26.000000000 -0500
++++ src/gnucash-2.6.3/src/app-utils/swig-app-utils-guile.c	2014-04-01 22:49:45.141133800 -0500
 @@ -87,7 +87,7 @@ SWIG_init (void);
  #endif
  
@@ -18,228 +18,8 @@
  #   define SWIGSTDCALL __stdcall
  # else
  #   define SWIGSTDCALL
---- origsrc/gnucash-2.4.7/src/business/dialog-tax-table/swig-dialog-tax-table.c	2011-07-02 15:17:42.000000000 -0500
-+++ src/gnucash-2.4.7/src/business/dialog-tax-table/swig-dialog-tax-table.c	2011-07-10 19:30:22.698979400 -0500
-@@ -87,7 +87,7 @@ SWIG_init (void);
- #endif
- 
- #ifndef SWIGEXPORT
--# if defined(_WIN32) || defined(__WIN32__) || defined(__CYGWIN__)
-+# if defined(_WIN32) || defined(__WIN32__)
- #   if defined(STATIC_LINKED)
- #     define SWIGEXPORT
- #   else
-@@ -104,7 +104,7 @@ SWIG_init (void);
- 
- /* calling conventions for Windows */
- #ifndef SWIGSTDCALL
--# if defined(_WIN32) || defined(__WIN32__) || defined(__CYGWIN__)
-+# if defined(_WIN32) || defined(__WIN32__)
- #   define SWIGSTDCALL __stdcall
- # else
- #   define SWIGSTDCALL
---- origsrc/gnucash-2.4.7/src/core-utils/swig-core-utils.c	2011-07-02 15:17:26.000000000 -0500
-+++ src/gnucash-2.4.7/src/core-utils/swig-core-utils.c	2011-07-10 19:30:22.761379500 -0500
-@@ -87,7 +87,7 @@ SWIG_init (void);
- #endif
- 
- #ifndef SWIGEXPORT
--# if defined(_WIN32) || defined(__WIN32__) || defined(__CYGWIN__)
-+# if defined(_WIN32) || defined(__WIN32__)
- #   if defined(STATIC_LINKED)
- #     define SWIGEXPORT
- #   else
-@@ -104,7 +104,7 @@ SWIG_init (void);
- 
- /* calling conventions for Windows */
- #ifndef SWIGSTDCALL
--# if defined(_WIN32) || defined(__WIN32__) || defined(__CYGWIN__)
-+# if defined(_WIN32) || defined(__WIN32__)
- #   define SWIGSTDCALL __stdcall
- # else
- #   define SWIGSTDCALL
---- origsrc/gnucash-2.4.7/src/engine/swig-business-core.c	2011-07-02 15:17:29.000000000 -0500
-+++ src/gnucash-2.4.7/src/engine/swig-business-core.c	2011-07-10 19:30:22.870579700 -0500
-@@ -87,7 +87,7 @@ SWIG_init (void);
- #endif
- 
- #ifndef SWIGEXPORT
--# if defined(_WIN32) || defined(__WIN32__) || defined(__CYGWIN__)
-+# if defined(_WIN32) || defined(__WIN32__)
- #   if defined(STATIC_LINKED)
- #     define SWIGEXPORT
- #   else
-@@ -104,7 +104,7 @@ SWIG_init (void);
- 
- /* calling conventions for Windows */
- #ifndef SWIGSTDCALL
--# if defined(_WIN32) || defined(__WIN32__) || defined(__CYGWIN__)
-+# if defined(_WIN32) || defined(__WIN32__)
- #   define SWIGSTDCALL __stdcall
- # else
- #   define SWIGSTDCALL
---- origsrc/gnucash-2.4.7/src/engine/swig-engine.c	2011-07-02 15:17:29.000000000 -0500
-+++ src/gnucash-2.4.7/src/engine/swig-engine.c	2011-07-10 19:30:22.995379900 -0500
-@@ -87,7 +87,7 @@ SWIG_init (void);
- #endif
- 
- #ifndef SWIGEXPORT
--# if defined(_WIN32) || defined(__WIN32__) || defined(__CYGWIN__)
-+# if defined(_WIN32) || defined(__WIN32__)
- #   if defined(STATIC_LINKED)
- #     define SWIGEXPORT
- #   else
-@@ -104,7 +104,7 @@ SWIG_init (void);
- 
- /* calling conventions for Windows */
- #ifndef SWIGSTDCALL
--# if defined(_WIN32) || defined(__WIN32__) || defined(__CYGWIN__)
-+# if defined(_WIN32) || defined(__WIN32__)
- #   define SWIGSTDCALL __stdcall
- # else
- #   define SWIGSTDCALL
---- origsrc/gnucash-2.4.7/src/gnc-module/swig-gnc-module.c	2011-07-02 15:17:27.000000000 -0500
-+++ src/gnucash-2.4.7/src/gnc-module/swig-gnc-module.c	2011-07-10 19:30:23.010980000 -0500
-@@ -87,7 +87,7 @@ SWIG_init (void);
- #endif
- 
- #ifndef SWIGEXPORT
--# if defined(_WIN32) || defined(__WIN32__) || defined(__CYGWIN__)
-+# if defined(_WIN32) || defined(__WIN32__)
- #   if defined(STATIC_LINKED)
- #     define SWIGEXPORT
- #   else
-@@ -104,7 +104,7 @@ SWIG_init (void);
- 
- /* calling conventions for Windows */
- #ifndef SWIGSTDCALL
--# if defined(_WIN32) || defined(__WIN32__) || defined(__CYGWIN__)
-+# if defined(_WIN32) || defined(__WIN32__)
- #   define SWIGSTDCALL __stdcall
- # else
- #   define SWIGSTDCALL
---- origsrc/gnucash-2.4.7/src/gnc-module/test/mod-bar/swig-bar.c	2011-07-02 15:17:27.000000000 -0500
-+++ src/gnucash-2.4.7/src/gnc-module/test/mod-bar/swig-bar.c	2011-07-10 19:30:23.026580000 -0500
-@@ -87,7 +87,7 @@ SWIG_init (void);
- #endif
- 
- #ifndef SWIGEXPORT
--# if defined(_WIN32) || defined(__WIN32__) || defined(__CYGWIN__)
-+# if defined(_WIN32) || defined(__WIN32__)
- #   if defined(STATIC_LINKED)
- #     define SWIGEXPORT
- #   else
-@@ -104,7 +104,7 @@ SWIG_init (void);
- 
- /* calling conventions for Windows */
- #ifndef SWIGSTDCALL
--# if defined(_WIN32) || defined(__WIN32__) || defined(__CYGWIN__)
-+# if defined(_WIN32) || defined(__WIN32__)
- #   define SWIGSTDCALL __stdcall
- # else
- #   define SWIGSTDCALL
---- origsrc/gnucash-2.4.7/src/gnc-module/test/mod-baz/swig-baz.c	2011-07-02 15:17:28.000000000 -0500
-+++ src/gnucash-2.4.7/src/gnc-module/test/mod-baz/swig-baz.c	2011-07-10 19:30:23.042180000 -0500
-@@ -87,7 +87,7 @@ SWIG_init (void);
- #endif
- 
- #ifndef SWIGEXPORT
--# if defined(_WIN32) || defined(__WIN32__) || defined(__CYGWIN__)
-+# if defined(_WIN32) || defined(__WIN32__)
- #   if defined(STATIC_LINKED)
- #     define SWIGEXPORT
- #   else
-@@ -104,7 +104,7 @@ SWIG_init (void);
- 
- /* calling conventions for Windows */
- #ifndef SWIGSTDCALL
--# if defined(_WIN32) || defined(__WIN32__) || defined(__CYGWIN__)
-+# if defined(_WIN32) || defined(__WIN32__)
- #   define SWIGSTDCALL __stdcall
- # else
- #   define SWIGSTDCALL
---- origsrc/gnucash-2.4.7/src/gnc-module/test/mod-foo/swig-foo.c	2011-07-02 15:17:27.000000000 -0500
-+++ src/gnucash-2.4.7/src/gnc-module/test/mod-foo/swig-foo.c	2011-07-10 19:30:23.057780000 -0500
-@@ -87,7 +87,7 @@ SWIG_init (void);
- #endif
- 
- #ifndef SWIGEXPORT
--# if defined(_WIN32) || defined(__WIN32__) || defined(__CYGWIN__)
-+# if defined(_WIN32) || defined(__WIN32__)
- #   if defined(STATIC_LINKED)
- #     define SWIGEXPORT
- #   else
-@@ -104,7 +104,7 @@ SWIG_init (void);
- 
- /* calling conventions for Windows */
- #ifndef SWIGSTDCALL
--# if defined(_WIN32) || defined(__WIN32__) || defined(__CYGWIN__)
-+# if defined(_WIN32) || defined(__WIN32__)
- #   define SWIGSTDCALL __stdcall
- # else
- #   define SWIGSTDCALL
---- origsrc/gnucash-2.4.7/src/gnome/swig-gnome.c	2011-07-02 15:17:39.000000000 -0500
-+++ src/gnucash-2.4.7/src/gnome/swig-gnome.c	2011-07-10 19:30:23.073380100 -0500
-@@ -87,7 +87,7 @@ SWIG_init (void);
- #endif
- 
- #ifndef SWIGEXPORT
--# if defined(_WIN32) || defined(__WIN32__) || defined(__CYGWIN__)
-+# if defined(_WIN32) || defined(__WIN32__)
- #   if defined(STATIC_LINKED)
- #     define SWIGEXPORT
- #   else
-@@ -104,7 +104,7 @@ SWIG_init (void);
- 
- /* calling conventions for Windows */
- #ifndef SWIGSTDCALL
--# if defined(_WIN32) || defined(__WIN32__) || defined(__CYGWIN__)
-+# if defined(_WIN32) || defined(__WIN32__)
- #   define SWIGSTDCALL __stdcall
- # else
- #   define SWIGSTDCALL
---- origsrc/gnucash-2.4.7/src/gnome-utils/swig-gnome-utils.c	2011-07-02 15:17:34.000000000 -0500
-+++ src/gnucash-2.4.7/src/gnome-utils/swig-gnome-utils.c	2011-07-10 19:30:23.088980100 -0500
-@@ -87,7 +87,7 @@ SWIG_init (void);
- #endif
- 
- #ifndef SWIGEXPORT
--# if defined(_WIN32) || defined(__WIN32__) || defined(__CYGWIN__)
-+# if defined(_WIN32) || defined(__WIN32__)
- #   if defined(STATIC_LINKED)
- #     define SWIGEXPORT
- #   else
-@@ -104,7 +104,7 @@ SWIG_init (void);
- 
- /* calling conventions for Windows */
- #ifndef SWIGSTDCALL
--# if defined(_WIN32) || defined(__WIN32__) || defined(__CYGWIN__)
-+# if defined(_WIN32) || defined(__WIN32__)
- #   define SWIGSTDCALL __stdcall
- # else
- #   define SWIGSTDCALL
---- origsrc/gnucash-2.4.7/src/html/swig-gnc-html.c	2011-07-02 15:17:35.000000000 -0500
-+++ src/gnucash-2.4.7/src/html/swig-gnc-html.c	2011-07-10 19:30:23.120180100 -0500
-@@ -87,7 +87,7 @@ SWIG_init (void);
- #endif
- 
- #ifndef SWIGEXPORT
--# if defined(_WIN32) || defined(__WIN32__) || defined(__CYGWIN__)
-+# if defined(_WIN32) || defined(__WIN32__)
- #   if defined(STATIC_LINKED)
- #     define SWIGEXPORT
- #   else
-@@ -104,7 +104,7 @@ SWIG_init (void);
- 
- /* calling conventions for Windows */
- #ifndef SWIGSTDCALL
--# if defined(_WIN32) || defined(__WIN32__) || defined(__CYGWIN__)
-+# if defined(_WIN32) || defined(__WIN32__)
- #   define SWIGSTDCALL __stdcall
- # else
- #   define SWIGSTDCALL
---- origsrc/gnucash-2.4.7/src/optional/python-bindings/gnucash_core.c	2011-07-02 15:17:48.000000000 -0500
-+++ src/gnucash-2.4.7/src/optional/python-bindings/gnucash_core.c	2011-07-10 19:30:23.416580700 -0500
+--- origsrc/gnucash-2.6.3/src/app-utils/swig-app-utils-python.c	2014-03-29 18:54:26.000000000 -0500
++++ src/gnucash-2.6.3/src/app-utils/swig-app-utils-python.c	2014-04-01 22:49:45.171637700 -0500
 @@ -85,7 +85,7 @@
  #endif
  
@@ -258,7 +38,7 @@
  #   define SWIGSTDCALL __stdcall
  # else
  #   define SWIGSTDCALL
-@@ -1265,7 +1265,7 @@ extern "C" {
+@@ -1363,7 +1363,7 @@ extern "C" {
  #endif
  
  /*  How to access Py_None */
@@ -267,8 +47,8 @@
  #  ifndef SWIG_PYTHON_NO_BUILD_NONE
  #    ifndef SWIG_PYTHON_BUILD_NONE
  #      define SWIG_PYTHON_BUILD_NONE
---- origsrc/gnucash-2.4.7/src/report/report-gnome/swig-report-gnome.c	2011-07-02 15:17:37.000000000 -0500
-+++ src/gnucash-2.4.7/src/report/report-gnome/swig-report-gnome.c	2011-07-10 19:30:23.432180700 -0500
+--- origsrc/gnucash-2.6.3/src/core-utils/swig-core-utils-guile.c	2014-03-29 18:54:23.000000000 -0500
++++ src/gnucash-2.6.3/src/core-utils/swig-core-utils-guile.c	2014-04-01 22:49:45.193140400 -0500
 @@ -87,7 +87,7 @@ SWIG_init (void);
  #endif
  
@@ -287,8 +67,37 @@
  #   define SWIGSTDCALL __stdcall
  # else
  #   define SWIGSTDCALL
---- origsrc/gnucash-2.4.7/src/report/report-system/swig-report-system.c	2011-07-02 15:17:36.000000000 -0500
-+++ src/gnucash-2.4.7/src/report/report-system/swig-report-system.c	2011-07-10 19:30:23.447780700 -0500
+--- origsrc/gnucash-2.6.3/src/core-utils/swig-core-utils-python.c	2014-03-29 18:54:23.000000000 -0500
++++ src/gnucash-2.6.3/src/core-utils/swig-core-utils-python.c	2014-04-01 22:49:45.223144200 -0500
+@@ -85,7 +85,7 @@
+ #endif
+ 
+ #ifndef SWIGEXPORT
+-# if defined(_WIN32) || defined(__WIN32__) || defined(__CYGWIN__)
++# if defined(_WIN32) || defined(__WIN32__)
+ #   if defined(STATIC_LINKED)
+ #     define SWIGEXPORT
+ #   else
+@@ -102,7 +102,7 @@
+ 
+ /* calling conventions for Windows */
+ #ifndef SWIGSTDCALL
+-# if defined(_WIN32) || defined(__WIN32__) || defined(__CYGWIN__)
++# if defined(_WIN32) || defined(__WIN32__)
+ #   define SWIGSTDCALL __stdcall
+ # else
+ #   define SWIGSTDCALL
+@@ -1363,7 +1363,7 @@ extern "C" {
+ #endif
+ 
+ /*  How to access Py_None */
+-#if defined(_WIN32) || defined(__WIN32__) || defined(__CYGWIN__)
++#if defined(_WIN32) || defined(__WIN32__)
+ #  ifndef SWIG_PYTHON_NO_BUILD_NONE
+ #    ifndef SWIG_PYTHON_BUILD_NONE
+ #      define SWIG_PYTHON_BUILD_NONE
+--- origsrc/gnucash-2.6.3/src/engine/swig-engine.c	2014-03-29 18:54:25.000000000 -0500
++++ src/gnucash-2.6.3/src/engine/swig-engine.c	2014-04-01 22:49:45.507180300 -0500
 @@ -87,7 +87,7 @@ SWIG_init (void);
  #endif
  
@@ -307,9 +116,9 @@
  #   define SWIGSTDCALL __stdcall
  # else
  #   define SWIGSTDCALL
---- origsrc/gnucash-2.4.7/src/swig-runtime.h	2011-07-02 15:17:24.000000000 -0500
-+++ src/gnucash-2.4.7/src/swig-runtime.h	2011-07-10 19:30:23.463380700 -0500
-@@ -82,7 +82,7 @@
+--- origsrc/gnucash-2.6.3/src/gnc-module/swig-gnc-module.c	2014-03-29 18:54:24.000000000 -0500
++++ src/gnucash-2.6.3/src/gnc-module/swig-gnc-module.c	2014-04-01 22:49:45.547685400 -0500
+@@ -87,7 +87,7 @@ SWIG_init (void);
  #endif
  
  #ifndef SWIGEXPORT
@@ -318,7 +127,7 @@
  #   if defined(STATIC_LINKED)
  #     define SWIGEXPORT
  #   else
-@@ -99,7 +99,7 @@
+@@ -104,7 +104,7 @@ SWIG_init (void);
  
  /* calling conventions for Windows */
  #ifndef SWIGSTDCALL
@@ -327,3 +136,212 @@
  #   define SWIGSTDCALL __stdcall
  # else
  #   define SWIGSTDCALL
+--- origsrc/gnucash-2.6.3/src/gnc-module/test/mod-bar/swig-bar.c	2014-03-29 18:54:24.000000000 -0500
++++ src/gnucash-2.6.3/src/gnc-module/test/mod-bar/swig-bar.c	2014-04-01 22:49:45.584190000 -0500
+@@ -87,7 +87,7 @@ SWIG_init (void);
+ #endif
+ 
+ #ifndef SWIGEXPORT
+-# if defined(_WIN32) || defined(__WIN32__) || defined(__CYGWIN__)
++# if defined(_WIN32) || defined(__WIN32__)
+ #   if defined(STATIC_LINKED)
+ #     define SWIGEXPORT
+ #   else
+@@ -104,7 +104,7 @@ SWIG_init (void);
+ 
+ /* calling conventions for Windows */
+ #ifndef SWIGSTDCALL
+-# if defined(_WIN32) || defined(__WIN32__) || defined(__CYGWIN__)
++# if defined(_WIN32) || defined(__WIN32__)
+ #   define SWIGSTDCALL __stdcall
+ # else
+ #   define SWIGSTDCALL
+--- origsrc/gnucash-2.6.3/src/gnc-module/test/mod-baz/swig-baz.c	2014-03-29 18:54:24.000000000 -0500
++++ src/gnucash-2.6.3/src/gnc-module/test/mod-baz/swig-baz.c	2014-04-01 22:49:45.618694400 -0500
+@@ -87,7 +87,7 @@ SWIG_init (void);
+ #endif
+ 
+ #ifndef SWIGEXPORT
+-# if defined(_WIN32) || defined(__WIN32__) || defined(__CYGWIN__)
++# if defined(_WIN32) || defined(__WIN32__)
+ #   if defined(STATIC_LINKED)
+ #     define SWIGEXPORT
+ #   else
+@@ -104,7 +104,7 @@ SWIG_init (void);
+ 
+ /* calling conventions for Windows */
+ #ifndef SWIGSTDCALL
+-# if defined(_WIN32) || defined(__WIN32__) || defined(__CYGWIN__)
++# if defined(_WIN32) || defined(__WIN32__)
+ #   define SWIGSTDCALL __stdcall
+ # else
+ #   define SWIGSTDCALL
+--- origsrc/gnucash-2.6.3/src/gnc-module/test/mod-foo/swig-foo.c	2014-03-29 18:54:24.000000000 -0500
++++ src/gnucash-2.6.3/src/gnc-module/test/mod-foo/swig-foo.c	2014-04-01 22:49:45.628695700 -0500
+@@ -87,7 +87,7 @@ SWIG_init (void);
+ #endif
+ 
+ #ifndef SWIGEXPORT
+-# if defined(_WIN32) || defined(__WIN32__) || defined(__CYGWIN__)
++# if defined(_WIN32) || defined(__WIN32__)
+ #   if defined(STATIC_LINKED)
+ #     define SWIGEXPORT
+ #   else
+@@ -104,7 +104,7 @@ SWIG_init (void);
+ 
+ /* calling conventions for Windows */
+ #ifndef SWIGSTDCALL
+-# if defined(_WIN32) || defined(__WIN32__) || defined(__CYGWIN__)
++# if defined(_WIN32) || defined(__WIN32__)
+ #   define SWIGSTDCALL __stdcall
+ # else
+ #   define SWIGSTDCALL
+--- origsrc/gnucash-2.6.3/src/gnome/swig-gnome.c	2014-03-29 18:54:30.000000000 -0500
++++ src/gnucash-2.6.3/src/gnome/swig-gnome.c	2014-04-01 22:49:45.642197400 -0500
+@@ -87,7 +87,7 @@ SWIG_init (void);
+ #endif
+ 
+ #ifndef SWIGEXPORT
+-# if defined(_WIN32) || defined(__WIN32__) || defined(__CYGWIN__)
++# if defined(_WIN32) || defined(__WIN32__)
+ #   if defined(STATIC_LINKED)
+ #     define SWIGEXPORT
+ #   else
+@@ -104,7 +104,7 @@ SWIG_init (void);
+ 
+ /* calling conventions for Windows */
+ #ifndef SWIGSTDCALL
+-# if defined(_WIN32) || defined(__WIN32__) || defined(__CYGWIN__)
++# if defined(_WIN32) || defined(__WIN32__)
+ #   define SWIGSTDCALL __stdcall
+ # else
+ #   define SWIGSTDCALL
+--- origsrc/gnucash-2.6.3/src/gnome-utils/swig-gnome-utils.c	2014-03-29 18:54:28.000000000 -0500
++++ src/gnucash-2.6.3/src/gnome-utils/swig-gnome-utils.c	2014-04-01 22:49:45.653698900 -0500
+@@ -87,7 +87,7 @@ SWIG_init (void);
+ #endif
+ 
+ #ifndef SWIGEXPORT
+-# if defined(_WIN32) || defined(__WIN32__) || defined(__CYGWIN__)
++# if defined(_WIN32) || defined(__WIN32__)
+ #   if defined(STATIC_LINKED)
+ #     define SWIGEXPORT
+ #   else
+@@ -104,7 +104,7 @@ SWIG_init (void);
+ 
+ /* calling conventions for Windows */
+ #ifndef SWIGSTDCALL
+-# if defined(_WIN32) || defined(__WIN32__) || defined(__CYGWIN__)
++# if defined(_WIN32) || defined(__WIN32__)
+ #   define SWIGSTDCALL __stdcall
+ # else
+ #   define SWIGSTDCALL
+--- origsrc/gnucash-2.6.3/src/html/swig-gnc-html.c	2014-03-29 18:54:29.000000000 -0500
++++ src/gnucash-2.6.3/src/html/swig-gnc-html.c	2014-04-01 22:49:45.665200300 -0500
+@@ -87,7 +87,7 @@ SWIG_init (void);
+ #endif
+ 
+ #ifndef SWIGEXPORT
+-# if defined(_WIN32) || defined(__WIN32__) || defined(__CYGWIN__)
++# if defined(_WIN32) || defined(__WIN32__)
+ #   if defined(STATIC_LINKED)
+ #     define SWIGEXPORT
+ #   else
+@@ -104,7 +104,7 @@ SWIG_init (void);
+ 
+ /* calling conventions for Windows */
+ #ifndef SWIGSTDCALL
+-# if defined(_WIN32) || defined(__WIN32__) || defined(__CYGWIN__)
++# if defined(_WIN32) || defined(__WIN32__)
+ #   define SWIGSTDCALL __stdcall
+ # else
+ #   define SWIGSTDCALL
+--- origsrc/gnucash-2.6.3/src/report/report-gnome/swig-report-gnome.c	2014-03-29 18:54:29.000000000 -0500
++++ src/gnucash-2.6.3/src/report/report-gnome/swig-report-gnome.c	2014-04-01 22:49:45.676201700 -0500
+@@ -87,7 +87,7 @@ SWIG_init (void);
+ #endif
+ 
+ #ifndef SWIGEXPORT
+-# if defined(_WIN32) || defined(__WIN32__) || defined(__CYGWIN__)
++# if defined(_WIN32) || defined(__WIN32__)
+ #   if defined(STATIC_LINKED)
+ #     define SWIGEXPORT
+ #   else
+@@ -104,7 +104,7 @@ SWIG_init (void);
+ 
+ /* calling conventions for Windows */
+ #ifndef SWIGSTDCALL
+-# if defined(_WIN32) || defined(__WIN32__) || defined(__CYGWIN__)
++# if defined(_WIN32) || defined(__WIN32__)
+ #   define SWIGSTDCALL __stdcall
+ # else
+ #   define SWIGSTDCALL
+--- origsrc/gnucash-2.6.3/src/report/report-system/swig-report-system.c	2014-03-29 18:54:29.000000000 -0500
++++ src/gnucash-2.6.3/src/report/report-system/swig-report-system.c	2014-04-01 22:49:45.686203000 -0500
+@@ -87,7 +87,7 @@ SWIG_init (void);
+ #endif
+ 
+ #ifndef SWIGEXPORT
+-# if defined(_WIN32) || defined(__WIN32__) || defined(__CYGWIN__)
++# if defined(_WIN32) || defined(__WIN32__)
+ #   if defined(STATIC_LINKED)
+ #     define SWIGEXPORT
+ #   else
+@@ -104,7 +104,7 @@ SWIG_init (void);
+ 
+ /* calling conventions for Windows */
+ #ifndef SWIGSTDCALL
+-# if defined(_WIN32) || defined(__WIN32__) || defined(__CYGWIN__)
++# if defined(_WIN32) || defined(__WIN32__)
+ #   define SWIGSTDCALL __stdcall
+ # else
+ #   define SWIGSTDCALL
+--- origsrc/gnucash-2.6.3/src/test-core/swig-unittest-support-guile.c	2014-03-29 18:54:23.000000000 -0500
++++ src/gnucash-2.6.3/src/test-core/swig-unittest-support-guile.c	2014-04-01 22:49:45.698704600 -0500
+@@ -87,7 +87,7 @@ SWIG_init (void);
+ #endif
+ 
+ #ifndef SWIGEXPORT
+-# if defined(_WIN32) || defined(__WIN32__) || defined(__CYGWIN__)
++# if defined(_WIN32) || defined(__WIN32__)
+ #   if defined(STATIC_LINKED)
+ #     define SWIGEXPORT
+ #   else
+@@ -104,7 +104,7 @@ SWIG_init (void);
+ 
+ /* calling conventions for Windows */
+ #ifndef SWIGSTDCALL
+-# if defined(_WIN32) || defined(__WIN32__) || defined(__CYGWIN__)
++# if defined(_WIN32) || defined(__WIN32__)
+ #   define SWIGSTDCALL __stdcall
+ # else
+ #   define SWIGSTDCALL
+--- origsrc/gnucash-2.6.3/src/test-core/swig-unittest-support-python.c	2014-03-29 18:54:23.000000000 -0500
++++ src/gnucash-2.6.3/src/test-core/swig-unittest-support-python.c	2014-04-01 22:49:45.723707800 -0500
+@@ -85,7 +85,7 @@
+ #endif
+ 
+ #ifndef SWIGEXPORT
+-# if defined(_WIN32) || defined(__WIN32__) || defined(__CYGWIN__)
++# if defined(_WIN32) || defined(__WIN32__)
+ #   if defined(STATIC_LINKED)
+ #     define SWIGEXPORT
+ #   else
+@@ -102,7 +102,7 @@
+ 
+ /* calling conventions for Windows */
+ #ifndef SWIGSTDCALL
+-# if defined(_WIN32) || defined(__WIN32__) || defined(__CYGWIN__)
++# if defined(_WIN32) || defined(__WIN32__)
+ #   define SWIGSTDCALL __stdcall
+ # else
+ #   define SWIGSTDCALL
+@@ -1363,7 +1363,7 @@ extern "C" {
+ #endif
+ 
+ /*  How to access Py_None */
+-#if defined(_WIN32) || defined(__WIN32__) || defined(__CYGWIN__)
++#if defined(_WIN32) || defined(__WIN32__)
+ #  ifndef SWIG_PYTHON_NO_BUILD_NONE
+ #    ifndef SWIG_PYTHON_BUILD_NONE
+ #      define SWIG_PYTHON_BUILD_NONE
