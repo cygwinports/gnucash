@@ -1,7 +1,7 @@
 inherit gnome2
 
 NAME="gnucash"
-VERSION=2.6.3
+VERSION=2.6.4
 RELEASE=1
 CATEGORY="Office"
 SUMMARY="GNOME financial accounting program"
@@ -23,6 +23,8 @@ gnucash_REQUIRES="guile-www perl-Crypt-SSLeay perl-Date-Manip perl-Finance-Quote
 gnucash_CONTENTS="--exclude=*.dll.a etc/ usr/bin/ usr/lib/gnucash/ usr/lib/*.la usr/libexec/ usr/share/"
 gnucash_devel_REQUIRES="guile-devel libglib2.0-devel libgtk2.0-devel"
 gnucash_devel_CONTENTS="usr/include/ usr/lib/gnucash/*.a usr/lib/*.a"
+
+DIFF_EXCLUDES="gnucash.rc"
 
 DEPEND="pkgconfig(gnome-keyring-1)
 	pkgconfig(gtk+-2.0)

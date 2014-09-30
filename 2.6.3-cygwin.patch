@@ -1,12 +1,11 @@
---- origsrc/gnucash-2.6.3/configure.ac	2014-03-29 18:14:32.000000000 -0500
-+++ src/gnucash-2.6.3/configure.ac	2014-04-01 22:23:19.464778500 -0500
-@@ -390,17 +390,17 @@ update to latest  darwin])
+--- origsrc/gnucash-2.6.4/configure.ac	2014-09-27 19:11:31.000000000 -0500
++++ src/gnucash-2.6.4/configure.ac	2014-09-30 17:00:47.063494900 -0500
+@@ -403,20 +403,20 @@ update to latest  darwin])
            ], [AC_MSG_RESULT(no)])
          LIBS="${saved_LIBS}"
          AC_SUBST(HTMLHELP_LIBS)
 +
 +        REGEX_LIBS="-lregex"
-+
 +        # Adjust CFLAGS and LDFLAGS on Windows
 +        CFLAGS="${CFLAGS} -mms-bitfields"
 +        LDFLAGS="${LDFLAGS} -mwindows"
@@ -15,29 +14,18 @@
          AC_MSG_RESULT(no)
          ;;
      esac
--
+ 
 -    REGEX_LIBS="-lregex"
 -
 -    # Adjust CFLAGS and LDFLAGS on Windows
 -    CFLAGS="${CFLAGS} -mms-bitfields"
--    LDFLAGS="${LDFLAGS} -no-undefined -mwindows"
+ #   NOUNDEF will be added to ldflags for the makefiles but not the configures
+ #   This fixes a problem with libtool and gcc 4.8
+     NOUNDEF="-no-undefined"
+-    LDFLAGS="${LDFLAGS} -mwindows"
      ;;
  
    *)
-@@ -1322,6 +1322,13 @@ else
- fi
- AC_MSG_RESULT($warnFLAGS)
- 
-+case $host_os in
-+cygwin*|mingw*)
-+  # Required by libtool on PE platforms
-+  LDFLAGS="${LDFLAGS} -no-undefined"
-+  ;;
-+esac
-+
- ### --------------------------------------------------------------------------
- ### Adjustments -- especially executables that aren't generated via
- ### makefiles, so that we don't have an opportunity to adjust them
 --- origsrc/gnucash-2.6.3/doc/Makefile.am	2014-03-01 13:55:35.000000000 -0600
 +++ src/gnucash-2.6.3/doc/Makefile.am	2014-04-01 22:23:56.332960100 -0500
 @@ -54,7 +54,7 @@ tip_of_the_day.list: tip_of_the_day.list
