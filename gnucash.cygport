@@ -1,7 +1,7 @@
 inherit gnome2
 
 NAME="gnucash"
-VERSION=2.6.7
+VERSION=2.6.9
 RELEASE=1
 CATEGORY="Office"
 SUMMARY="GNOME financial accounting program"
@@ -19,7 +19,7 @@ PATCH_URI="
 "
 
 PKG_NAMES="gnucash gnucash-devel"
-gnucash_REQUIRES="guile-www perl-Crypt-SSLeay perl-Date-Manip perl-Finance-Quote perl-HTML-Parser perl-HTML-TableExtract perl-LWP guile-slib"
+gnucash_REQUIRES="perl-Date-Manip perl-Finance-Quote"
 gnucash_CONTENTS="--exclude=*.dll.a etc/ usr/bin/ usr/lib/gnucash/ usr/lib/*.la usr/libexec/ usr/share/"
 gnucash_devel_REQUIRES="guile-devel libglib2.0-devel libgtk2.0-devel"
 gnucash_devel_CONTENTS="usr/include/ usr/lib/gnucash/*.a usr/lib/*.a"
@@ -35,11 +35,15 @@ DEPEND="pkgconfig(gnome-keyring-1)
 	pkgconfig(libxml-2.0)
 	pkgconfig(libxslt)
 	pkgconfig(webkit-1.0)
-	libdbi-devel
-	slib"
+	libdbi-devel"
 
 ACLOCAL_FLAGS="-I macros"
-CYGCONF_ARGS="--disable-binreloc"
+CYGCONF_ARGS="
+	--disable-binreloc
+	--enable-aqbanking
+	--enable-dbi
+	--enable-ofx
+"
 
 src_install() {
 	cd ${B}
