@@ -83,23 +83,23 @@
 @@ -280,7 +280,7 @@ CLEANFILES = $(BUILT_SOURCES) .scm-links
  MAINTAINERCLEANFILES = swig-gnome-utils.c
  
- # FIXME: Symlinking directories only works on non-win32.
+ # We want to do this only for the Gnome help tool on Linux and MacPorts.
 -if !PLATFORM_WIN32
 +if !OS_WIN32
+ if !PLATFORM_OSX_QUARTZ
  #
  # I hate inconsistent standards. Autotools puts help files into
- # ${datadir}/gnome/help/${program} while the gnome2 libraries expect
 --- origsrc/gnucash-2.6.3/src/html/Makefile.am	2014-03-01 13:55:35.000000000 -0600
 +++ src/gnucash-2.6.3/src/html/Makefile.am	2014-04-01 22:23:19.472279400 -0500
 @@ -75,7 +75,7 @@ CLEANFILES = $(BUILT_SOURCES) gnucash
  MAINTAINERCLEANFILES = swig-gnc-html.c
  
- # FIXME: Symlinking directories only works on non-win32.
+ # We do this only for the gnome help tool on Linux and MacPorts.
 -if !PLATFORM_WIN32
 +if !OS_WIN32
+ if !PLATFORM_OSX_QUARTZ
  #
  # I hate inconsistent standards. Autotools puts help files into
- # ${datadir}/gnome/help/${program} while the gnome2 libraries expect
 --- origsrc/gnucash-2.6.3/src/libqof/qof/guid.c	2014-03-01 13:55:35.000000000 -0600
 +++ src/gnucash-2.6.3/src/libqof/qof/guid.c	2014-04-01 22:24:48.028524600 -0500
 @@ -54,7 +54,7 @@
