@@ -1,8 +1,8 @@
 inherit gnome2
 
 NAME="gnucash"
-VERSION=2.6.13
-RELEASE=2
+VERSION=2.6.14
+RELEASE=1
 CATEGORY="Office"
 SUMMARY="GNOME financial accounting program"
 DESCRIPTION="GnuCash is personal and small-business financial-accounting software.
