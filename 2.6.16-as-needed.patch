@@ -1,0 +1,12 @@
+--- origsrc/gnucash-2.6.16/src/import-export/test/Makefile.am	2017-03-25 17:16:12.000000000 -0500
++++ src/gnucash-2.6.16/src/import-export/test/Makefile.am	2017-04-02 16:18:31.919450900 -0500
+@@ -68,8 +68,8 @@ test_import_pending_matches_LDADD = \
+   ${top_builddir}/src/libqof/qof/libgnc-qof.la \
+   ${top_builddir}/src/engine/libgncmod-engine.la \
+   ../libgncmod-generic-import.la \
+-  ${top_builddir}/src/test-core/libtest-core.la \
+   ${top_builddir}/src/engine/test-core/libgncmod-test-engine.la \
++  ${top_builddir}/src/test-core/libtest-core.la \
+   ${GLIB_LIBS}
+ 
+ test_import_pending_matches_CFLAGS = $(AM_CPPFLAGS)

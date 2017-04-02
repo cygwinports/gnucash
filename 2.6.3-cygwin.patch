@@ -78,6 +78,28 @@
  # The gnucash scripts don't make sense on Windows, so will only be
  # generated and included on the other platforms.
  # We handle gnucash scripts in a somewhat unexpected way, but we do
+--- origsrc/gnucash-2.6.16/src/gnc-test-env.pl	2016-11-27 19:47:55.000000000 -0600
++++ src/gnucash-2.6.16/src/gnc-test-env.pl	2017-04-02 11:55:25.511416600 -0500
+@@ -44,7 +44,7 @@ print_env_var "GUILE_LOAD_COMPILED_PATH"
+ print_env_var "LD_LIBRARY_PATH", "/.libs", $path_separator, @library_dirs;
+ print_env_var "DYLD_LIBRARY_PATH", "/.libs", $path_separator, @library_dirs;
+ 
+-if ( $^O =~ /MSWin32/ ) {
++if ( $^O =~ /MSWin32|cygwin/ ) {
+     print_env_var "PATH", "/.libs", ":", @library_dirs;
+ }
+ 
+@@ -55,7 +55,7 @@ if ($define_exports) {
+     print "export GUILE_LOAD_COMPILED_PATH;\n" if @guile_load_dirs;
+     print "export LD_LIBRARY_PATH;\n" if @library_dirs;
+     print "export DYLD_LIBRARY_PATH;\n" if @library_dirs;
+-    if ( $^O =~ /MSWin32/ ) {
++    if ( $^O =~ /MSWin32|cygwin/ ) {
+         print "export PATH;\n" if @library_dirs;
+     }
+-}
+\ No newline at end of file
++}
 --- origsrc/gnucash-2.6.3/src/gnome-utils/Makefile.am	2014-03-01 13:55:35.000000000 -0600
 +++ src/gnucash-2.6.3/src/gnome-utils/Makefile.am	2014-04-01 22:23:19.468779000 -0500
 @@ -280,7 +280,7 @@ CLEANFILES = $(BUILT_SOURCES) .scm-links

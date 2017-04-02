@@ -1,7 +1,7 @@
 inherit gnome2
 
 NAME="gnucash"
-VERSION=2.6.15
+VERSION=2.6.16
 RELEASE=1
 CATEGORY="Office"
 SUMMARY="GNOME financial accounting program"
@@ -16,12 +16,13 @@ PATCH_URI="
 	2.6.3-cygwin.patch
 	2.4.0-module-suffix.patch
 	2.6.3-swig-cygwin.patch
+	2.6.16-as-needed.patch
 "
 
 PKG_NAMES="gnucash gnucash-devel"
 gnucash_REQUIRES="perl-Date-Manip perl-Finance-Quote"
 gnucash_CONTENTS="--exclude=*.dll.a etc/ usr/bin/ usr/lib/gnucash/ usr/lib/*.la usr/libexec/ usr/share/"
-gnucash_devel_REQUIRES="guile-devel libglib2.0-devel libgtk2.0-devel"
+gnucash_devel_REQUIRES="libglib2.0-devel libgtk2.0-devel libguile2.0-devel"
 gnucash_devel_CONTENTS="usr/include/ usr/lib/gnucash/*.a usr/lib/*.a"
 
 DIFF_EXCLUDES="gnucash.rc gnucash-make-guids migratable-prefs.xml test-*"
@@ -43,6 +44,7 @@ CYGCONF_ARGS="
 	--enable-aqbanking
 	--enable-dbi
 	--enable-ofx
+	--with-guile=2.0
 "
 
 src_install() {

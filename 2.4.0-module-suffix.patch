@@ -1,6 +1,7 @@
 We can't load the DLLs directly on Cygwin, as they use the "cyg" prefix, 
 while the "libgncmod" prefix is required not only for module naming but 
-also for symbol lookup.
+also for symbol lookup.  As such, we must drop the .libs suffix from 
+GNC_MODULE_PATH, as g_module_open already adds it for uninstalled .la files.
 
 --- origsrc/gnucash-2.4.0/src/gnc-module/gnc-module.c	2010-12-21 20:01:12.000000000 -0600
 +++ src/gnucash-2.4.0/src/gnc-module/gnc-module.c	2011-01-27 02:27:10.950798500 -0600
@@ -12,3 +13,14 @@ also for symbol lookup.
                      || g_str_has_suffix(dent, ".dylib"))
                      && g_str_has_prefix(dent, GNC_MODULE_PREFIX))
              {
+--- origsrc/gnucash-2.6.16/src/gnc-test-env.pl	2017-04-02 12:42:31.496300300 -0500
++++ src/gnucash-2.6.16/src/gnc-test-env.pl	2017-04-02 15:50:14.179295200 -0500
+@@ -38,7 +38,7 @@ sub print_env_var {
+           $separator . '${' . $env_name . '}" ';
+ }
+ 
+-print_env_var "GNC_MODULE_PATH", "/.libs", $path_separator, @gnc_module_dirs;
++print_env_var "GNC_MODULE_PATH", "", $path_separator, @gnc_module_dirs;
+ print_env_var "GUILE_LOAD_PATH", "", $path_separator, @guile_load_dirs;
+ print_env_var "GUILE_LOAD_COMPILED_PATH", "", $path_separator, @guile_load_dirs;
+ print_env_var "LD_LIBRARY_PATH", "/.libs", $path_separator, @library_dirs;
