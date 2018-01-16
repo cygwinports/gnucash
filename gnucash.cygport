@@ -1,7 +1,7 @@
 inherit gnome2
 
 NAME="gnucash"
-VERSION=2.6.16
+VERSION=2.6.19
 RELEASE=1
 CATEGORY="Office"
 SUMMARY="GNOME financial accounting program"
@@ -16,7 +16,6 @@ PATCH_URI="
 	2.6.3-cygwin.patch
 	2.4.0-module-suffix.patch
 	2.6.3-swig-cygwin.patch
-	2.6.16-as-needed.patch
 "
 
 PKG_NAMES="gnucash gnucash-devel"
